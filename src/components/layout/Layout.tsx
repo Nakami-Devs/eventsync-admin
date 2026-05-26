@@ -3,5 +3,5 @@ import { AppBar } from './AppBar';
 import {Sidebar} from "./Sidebar";
 
 export const AdminLayout = (props: any) => (
-  <RALayout {...props} appBar={AppBar} sideBar={Sidebar} />
+  <RALayout {...props} appBar={AppBar} sidebar={Sidebar} />
 );
