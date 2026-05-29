@@ -1,9 +1,18 @@
-import type {AuthProvider} from "react-admin";
+import type { AuthProvider as RAAuthProvider } from 'ra-core';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
-export const authProvider: AuthProvider = {
-    login: async ({ username, password }) => {
+interface LoginParams {
+    username: string;
+    password: string;
+}
+
+interface ErrorResponse {
+    status?: number;
+}
+
+export const authProvider: RAAuthProvider = {
+    login: async ({ username, password }: LoginParams) => {
         try{
             const response = await fetch(`${API_URL}/admin/login`, {
                 method: 'POST',
@@ -43,7 +52,7 @@ export const authProvider: AuthProvider = {
     return token ? Promise.resolve() : Promise.reject();
     },
 
-    checkError: (error) => {
+    checkError: (error: ErrorResponse) => {
     const status = error.status;
     if (status === 401 || status === 403) {
         localStorage.removeItem('token');

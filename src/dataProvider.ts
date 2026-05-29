@@ -1,5 +1,5 @@
 import simpleRestProvider from 'ra-data-simple-rest';
-import { fetchUtils } from 'react-admin';
+import { fetchUtils } from 'ra-core';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 

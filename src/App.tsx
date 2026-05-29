@@ -3,6 +3,7 @@ import {Dashboard} from "./dashboard/Dashboard.tsx";
 import {Admin, Resource} from "react-admin";
 import {authProvider} from "./authProvider.ts";
 import {dataProvider} from "./dataProvider.ts";
+import { RoomsList, RoomsCreate, RoomsEdit } from "./rooms/index.ts";
 
 function App() {
 
@@ -16,6 +17,12 @@ function App() {
               name="events"
           >
           </Resource>
+          <Resource
+              name="rooms"
+              list={RoomsList}
+              create={RoomsCreate}
+              edit={RoomsEdit}
+          />
       </Admin>
   )
 }
