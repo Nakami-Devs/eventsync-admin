@@ -4,6 +4,9 @@ import {Admin, Resource} from "react-admin";
 import {authProvider} from "./authProvider.ts";
 import {dataProvider} from "./dataProvider.ts";
 import { AdminLayout } from './components/layout/Layout.tsx';
+import { EventList } from './components/events/EventList.tsx';
+import { EventEdit } from './components/events/EventEdit.tsx';
+import { EventCreate } from './components/events/EventCreate.tsx';
 
 function App() {
 
@@ -16,8 +19,9 @@ function App() {
       >
           <Resource
               name="events"
-          >
-          </Resource>
+                list={EventList}
+                edit={EventEdit}
+                create={EventCreate}/>
       </Admin>
   )
 }
