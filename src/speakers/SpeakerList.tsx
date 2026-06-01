@@ -1,6 +1,5 @@
 import { List, Datagrid, TextField, UrlField, ImageField } from 'react-admin'
 
-// Affiche la liste de tous les intervenants sous forme de tableau
 export const SpeakerList = () => (
   <List>
     <Datagrid rowClick="edit">

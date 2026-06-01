@@ -1,6 +1,6 @@
 import { Edit, SimpleForm, TextInput, required } from 'react-admin'
 
-// Formulaire pour modifier un intervenant existant
+
 export const SpeakerEdit = () => (
   <Edit>
     <SimpleForm>

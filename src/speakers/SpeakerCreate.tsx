@@ -1,6 +1,6 @@
 import { Create, SimpleForm, TextInput, required } from 'react-admin'
 
-// Formulaire pour créer un nouvel intervenant
+
 export const SpeakerCreate = () => (
   <Create>
     <SimpleForm>
