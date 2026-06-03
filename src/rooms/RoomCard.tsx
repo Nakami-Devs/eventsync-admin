@@ -1,8 +1,6 @@
 import { Card, CardContent, Typography, Box, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-// @ts-ignore: missing type declarations for this icon module
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
-// @ts-ignore
 import { useDelete } from 'react-admin';
 
 export const RoomCard = ({ record }: { record: any }) => {
