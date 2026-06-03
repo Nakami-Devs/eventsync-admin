@@ -1,55 +1,105 @@
-import type { ReactNode } from "react";
-import { Layout as RALayout, CheckForApplicationUpdate, useLogout } from "react-admin";
-import { Box, IconButton, Tooltip, Button, Link } from '@mui/material';
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
-import LogoutIcon from '@mui/icons-material/Logout';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { useContext } from 'react';
-import { ThemeToggleContext } from './App';
+import './App.css'
+import { Layout } from "./Layout.tsx";
+import { Admin, Resource } from "react-admin";
+import { createTheme } from '@mui/material/styles';
+import { dataProvider } from "./dataProvider.ts";
+import { RoomsList, RoomsCreate, RoomsEdit } from "./rooms/index.ts";
+import { createContext, useEffect, useMemo, useState } from 'react';
 
-export const Layout = ({ children }: { children: ReactNode }) => {
-  const { themeName, toggle } = useContext(ThemeToggleContext);
-  const logout = useLogout();
+type ThemeName = 'dark' | 'light';
 
-  return (
-    <RALayout>
-      {children}
-      <CheckForApplicationUpdate />
+export const ThemeToggleContext = createContext({
+    themeName: 'dark' as ThemeName,
+    toggle: (() => { }) as () => void,
+});
 
-      {/* Branding at top-left over sidebar */}
-      <Box className="sidebar-branding" sx={{ position: 'fixed', left: 12, top: 12, display: 'flex', alignItems: 'center', gap: 12, zIndex: 1400 }}>
-        <Box className="logo-fake" />
-        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-          <Box sx={{ color: '#e6eef6', fontWeight: 700 }}>EventSync</Box>
-          <Box sx={{ color: '#9aa6b2', fontSize: 12 }}>Administration</Box>
-        </Box>
-      </Box>
+const darkTheme = createTheme({
+    palette: {
+        mode: 'dark',
+        background: {
+            default: '#090e21',
+            paper: '#0f172a',
+        },
+        primary: {
+            main: '#7c3aed',
+        },
+        secondary: {
+            main: '#f97316',
+        },
+        text: {
+            primary: '#f8fafc',
+            secondary: '#cbd5e1',
+        },
+    },
+    typography: {
+        fontFamily: 'Inter, system-ui, sans-serif',
+    },
+});
 
-      {/* Bottom sidebar actions: theme toggle, back link, logout */}
-      <Box sx={{ position: 'fixed', left: 12, bottom: 24, zIndex: 1400, width: 220 }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <Box sx={{ color: '#cbd5e1', fontSize: 13 }}>Thème</Box>
-          </Box>
-          <Tooltip title={themeName === 'dark' ? 'Passer en light' : 'Passer en night'}>
-            <IconButton onClick={toggle} color="inherit" sx={{ bgcolor: themeName === 'dark' ? '#0f172a' : '#fff', width: 40, height: 40, borderRadius: 2 }}>
-              {themeName === 'dark' ? <Brightness7Icon sx={{ color: '#f8fafc' }} /> : <Brightness4Icon sx={{ color: '#0f172a' }} />}
-            </IconButton>
-          </Tooltip>
-        </Box>
+const lightTheme = createTheme({
+    palette: {
+        mode: 'light',
+        background: {
+            default: '#e0f2fe',
+            paper: '#ffffff',
+        },
+        primary: {
+            main: '#0284c7',
+        },
+        secondary: {
+            main: '#0ea5e9',
+        },
+        text: {
+            primary: '#0f172a',
+            secondary: '#475569',
+        },
+    },
+    typography: {
+        fontFamily: 'Inter, system-ui, sans-serif',
+    },
+});
 
-        <Box sx={{ borderTop: '1px solid rgba(148,163,184,0.04)', pt: 2 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, color: '#cbd5e1', mb: 1 }}>
-            <ArrowBackIcon sx={{ fontSize: 18 }} />
-            <Link href="#" underline="none" sx={{ color: '#cbd5e1' }}>Retour au site</Link>
-          </Box>
+function App() {
+    const [themeName, setThemeName] = useState<ThemeName>(() => {
+        try {
+            return (localStorage.getItem('theme') as ThemeName) || 'dark';
+        } catch {
+            return 'dark';
+        }
+    });
 
-          <Button startIcon={<LogoutIcon />} onClick={() => logout()} sx={{ color: '#ef4444', textTransform: 'none' }}>
-            Déconnexion
-          </Button>
-        </Box>
-      </Box>
-    </RALayout>
-  );
-};
+    useEffect(() => {
+        try {
+            localStorage.setItem('theme', themeName);
+            document.documentElement.setAttribute('data-theme', themeName);
+        } catch { }
+    }, [themeName]);
+
+    const currentTheme = useMemo(() => (themeName === 'dark' ? darkTheme : lightTheme), [themeName]);
+
+    const toggle = () => setThemeName(prev => (prev === 'dark' ? 'light' : 'dark'));
+
+    return (
+        <ThemeToggleContext.Provider value={{ themeName, toggle }}>
+            <Admin
+                layout={Layout}
+                theme={currentTheme}
+                dataProvider={dataProvider}
+                loginPage={false}
+            >
+                <Resource
+                    name="events"
+                >
+                </Resource>
+                <Resource
+                    name="rooms"
+                    list={RoomsList}
+                    create={RoomsCreate}
+                    edit={RoomsEdit}
+                />
+            </Admin>
+        </ThemeToggleContext.Provider>
+    )
+}
+
+export default App
