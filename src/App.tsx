@@ -1,30 +1,55 @@
-import './App.css'
-import {Dashboard} from "./dashboard/Dashboard.tsx";
-import {Admin, Resource} from "react-admin";
-import {authProvider} from "./authProvider.ts";
-import {dataProvider} from "./dataProvider.ts";
-import { RoomsList, RoomsCreate, RoomsEdit } from "./rooms/index.ts";
+import type { ReactNode } from "react";
+import { Layout as RALayout, CheckForApplicationUpdate, useLogout } from "react-admin";
+import { Box, IconButton, Tooltip, Button, Link } from '@mui/material';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import LogoutIcon from '@mui/icons-material/Logout';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useContext } from 'react';
+import { ThemeToggleContext } from './App';
 
-function App() {
+export const Layout = ({ children }: { children: ReactNode }) => {
+  const { themeName, toggle } = useContext(ThemeToggleContext);
+  const logout = useLogout();
 
   return (
-      <Admin
-          authProvider={authProvider}
-          dataProvider={dataProvider}
-          dashboard={Dashboard}
-      >
-          <Resource
-              name="events"
-          >
-          </Resource>
-          <Resource
-              name="rooms"
-              list={RoomsList}
-              create={RoomsCreate}
-              edit={RoomsEdit}
-          />
-      </Admin>
-  )
-}
+    <RALayout>
+      {children}
+      <CheckForApplicationUpdate />
 
-export default App
+      {/* Branding at top-left over sidebar */}
+      <Box className="sidebar-branding" sx={{ position: 'fixed', left: 12, top: 12, display: 'flex', alignItems: 'center', gap: 12, zIndex: 1400 }}>
+        <Box className="logo-fake" />
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+          <Box sx={{ color: '#e6eef6', fontWeight: 700 }}>EventSync</Box>
+          <Box sx={{ color: '#9aa6b2', fontSize: 12 }}>Administration</Box>
+        </Box>
+      </Box>
+
+      {/* Bottom sidebar actions: theme toggle, back link, logout */}
+      <Box sx={{ position: 'fixed', left: 12, bottom: 24, zIndex: 1400, width: 220 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <Box sx={{ color: '#cbd5e1', fontSize: 13 }}>Thème</Box>
+          </Box>
+          <Tooltip title={themeName === 'dark' ? 'Passer en light' : 'Passer en night'}>
+            <IconButton onClick={toggle} color="inherit" sx={{ bgcolor: themeName === 'dark' ? '#0f172a' : '#fff', width: 40, height: 40, borderRadius: 2 }}>
+              {themeName === 'dark' ? <Brightness7Icon sx={{ color: '#f8fafc' }} /> : <Brightness4Icon sx={{ color: '#0f172a' }} />}
+            </IconButton>
+          </Tooltip>
+        </Box>
+
+        <Box sx={{ borderTop: '1px solid rgba(148,163,184,0.04)', pt: 2 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, color: '#cbd5e1', mb: 1 }}>
+            <ArrowBackIcon sx={{ fontSize: 18 }} />
+            <Link href="#" underline="none" sx={{ color: '#cbd5e1' }}>Retour au site</Link>
+          </Box>
+
+          <Button startIcon={<LogoutIcon />} onClick={() => logout()} sx={{ color: '#ef4444', textTransform: 'none' }}>
+            Déconnexion
+          </Button>
+        </Box>
+      </Box>
+    </RALayout>
+  );
+};
