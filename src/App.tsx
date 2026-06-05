@@ -1,17 +1,17 @@
 import './App.css'
-import { Dashboard }     from './dashboard/Dashboard.tsx'
 import { Admin, Resource, defaultDarkTheme, defaultTheme } from 'react-admin'
 import { authProvider }  from './authProvider.ts'
 import { dataProvider }  from './dataProvider.ts'
-import { SpeakerList }   from './speakers/SpeakerList.tsx'
-import { SpeakerCreate } from './speakers/SpeakerCreate.tsx'
-import { SpeakerEdit }   from './speakers/SpeakerEdit.tsx'
-import { SpeakerShow }   from './speakers/SpeakerShow.tsx'
+import { SpeakerList }   from './components/speakers/SpeakerList.tsx'
+import { SpeakerCreate } from './components/speakers/SpeakerCreate.tsx'
+import { SpeakerEdit }   from './components/speakers/SpeakerEdit.tsx'
+import { SpeakerShow }   from './components/speakers/SpeakerShow.tsx'
 import PeopleAltIcon     from '@mui/icons-material/PeopleAlt'
 import { AdminLayout } from './components/layout/Layout.tsx';
 import { EventList } from './components/events/EventList.tsx';
 import { EventEdit } from './components/events/EventEdit.tsx';
 import { EventCreate } from './components/events/EventCreate.tsx';
+import {Dashboard} from "./components/dashboard/Dashboard.tsx";
 
 
 const lightTheme = {
@@ -44,10 +44,11 @@ function App() {
       authProvider={authProvider}
       dataProvider={dataProvider}
       dashboard={Dashboard}
+      layout={AdminLayout}
       theme={lightTheme}
       darkTheme={darkTheme}
     >
-      <Resource name="events" 
+      <Resource
         name="events"
         list={EventList}
         edit={EventEdit}
