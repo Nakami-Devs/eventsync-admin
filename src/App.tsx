@@ -2,15 +2,15 @@ import './App.css'
 import { Admin, Resource, defaultDarkTheme, defaultTheme } from 'react-admin'
 import { authProvider }  from './authProvider.ts'
 import { dataProvider }  from './dataProvider.ts'
-import { SpeakerList }   from './components/speakers/SpeakerList.tsx'
-import { SpeakerCreate } from './components/speakers/SpeakerCreate.tsx'
-import { SpeakerEdit }   from './components/speakers/SpeakerEdit.tsx'
-import { SpeakerShow }   from './components/speakers/SpeakerShow.tsx'
+import { SpeakerList }   from './resources/speakers/SpeakerList.tsx'
+import { SpeakerCreate } from './resources/speakers/SpeakerCreate.tsx'
+import { SpeakerEdit }   from './resources/speakers/SpeakerEdit.tsx'
+import { SpeakerShow }   from './resources/speakers/SpeakerShow.tsx'
 import PeopleAltIcon     from '@mui/icons-material/PeopleAlt'
 import { AdminLayout } from './components/layout/Layout.tsx';
-import { EventList } from './components/events/EventList.tsx';
-import { EventEdit } from './components/events/EventEdit.tsx';
-import { EventCreate } from './components/events/EventCreate.tsx';
+import { EventList } from './resources/events/EventList.tsx';
+import { EventEdit } from './resources/events/EventEdit.tsx';
+import { EventCreate } from './resources/events/EventCreate.tsx';
 import {Dashboard} from "./components/dashboard/Dashboard.tsx";
 
 
