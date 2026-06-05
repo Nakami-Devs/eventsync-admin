@@ -8,6 +8,10 @@ import { SpeakerCreate } from './speakers/SpeakerCreate.tsx'
 import { SpeakerEdit }   from './speakers/SpeakerEdit.tsx'
 import { SpeakerShow }   from './speakers/SpeakerShow.tsx'
 import PeopleAltIcon     from '@mui/icons-material/PeopleAlt'
+import { AdminLayout } from './components/layout/Layout.tsx';
+import { EventList } from './components/events/EventList.tsx';
+import { EventEdit } from './components/events/EventEdit.tsx';
+import { EventCreate } from './components/events/EventCreate.tsx';
 
 
 const lightTheme = {
@@ -43,7 +47,12 @@ function App() {
       theme={lightTheme}
       darkTheme={darkTheme}
     >
-      <Resource name="events" />
+      <Resource name="events" 
+        name="events"
+        list={EventList}
+        edit={EventEdit}
+        create={EventCreate}
+      />
       <Resource
         name="speakers"
         list={SpeakerList}
