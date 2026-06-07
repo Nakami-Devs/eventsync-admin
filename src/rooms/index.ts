@@ -1,3 +1,3 @@
 export { RoomsList } from './RoomsList';
-export { RoomsCreate } from './RoomsCreate';
-export { RoomsEdit } from './RoomsEdit';
+export { RoomCreate, RoomEdit } from './RoomForm';
+export { RoomCard } from './RoomCard';

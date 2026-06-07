@@ -1,9 +1,8 @@
-import './App.css'
 import { Layout } from "./Layout.tsx";
 import { Admin, Resource } from "react-admin";
 import { createTheme } from '@mui/material/styles';
 import { dataProvider } from "./dataProvider.ts";
-import { RoomsList, RoomsCreate, RoomsEdit } from "./rooms/index.ts";
+import { RoomsList, RoomCreate, RoomEdit } from "./rooms/index.ts";
 import { createContext, useEffect, useMemo, useState } from 'react';
 
 type ThemeName = 'dark' | 'light';
@@ -17,22 +16,47 @@ const darkTheme = createTheme({
     palette: {
         mode: 'dark',
         background: {
-            default: '#090e21',
-            paper: '#0f172a',
+            default: '#0f1729', // Dark blue navy
+            paper: '#1a2744',
         },
         primary: {
-            main: '#7c3aed',
+            main: '#a78bfa', // Purple button
+            light: '#c4b5fd',
+            dark: '#9370db',
         },
         secondary: {
-            main: '#f97316',
+            main: '#06b6d4', // Cyan
+        },
+        error: {
+            main: '#ef4444', // Red delete button
         },
         text: {
-            primary: '#f8fafc',
-            secondary: '#cbd5e1',
+            primary: '#e6eef6',
+            secondary: '#9aa6b2',
         },
     },
     typography: {
         fontFamily: 'Inter, system-ui, sans-serif',
+    },
+    components: {
+        MuiButton: {
+            styleOverrides: {
+                contained: {
+                    backgroundColor: '#a78bfa',
+                    color: '#fff',
+                    '&:hover': {
+                        backgroundColor: '#9370db',
+                    },
+                },
+            },
+        },
+        MuiIconButton: {
+            styleOverrides: {
+                root: {
+                    color: '#06b6d4',
+                },
+            },
+        },
     },
 });
 
@@ -40,14 +64,19 @@ const lightTheme = createTheme({
     palette: {
         mode: 'light',
         background: {
-            default: '#e0f2fe',
+            default: '#e0f7fa', // Light cyan sky
             paper: '#ffffff',
         },
         primary: {
-            main: '#0284c7',
+            main: '#0284c7', // Blue
+            light: '#06b6d4',
+            dark: '#0369a1',
         },
         secondary: {
-            main: '#0ea5e9',
+            main: '#06b6d4', // Cyan
+        },
+        error: {
+            main: '#ef4444', // Red delete button
         },
         text: {
             primary: '#0f172a',
@@ -56,6 +85,26 @@ const lightTheme = createTheme({
     },
     typography: {
         fontFamily: 'Inter, system-ui, sans-serif',
+    },
+    components: {
+        MuiButton: {
+            styleOverrides: {
+                contained: {
+                    backgroundColor: '#0284c7',
+                    color: '#fff',
+                    '&:hover': {
+                        backgroundColor: '#0369a1',
+                    },
+                },
+            },
+        },
+        MuiIconButton: {
+            styleOverrides: {
+                root: {
+                    color: '#0284c7',
+                },
+            },
+        },
     },
 });
 
@@ -94,8 +143,8 @@ function App() {
                 <Resource
                     name="rooms"
                     list={RoomsList}
-                    create={RoomsCreate}
-                    edit={RoomsEdit}
+                    create={RoomCreate}
+                    edit={RoomEdit}
                 />
             </Admin>
         </ThemeToggleContext.Provider>
