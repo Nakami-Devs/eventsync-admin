@@ -2,7 +2,6 @@ import simpleRestProvider from 'ra-data-simple-rest';
 
 const API_URL = 'http://localhost:3000/api';
 
-// Mock data for rooms - Exact rooms from the screenshot
 const mockRooms = [
     { id: 1, name: 'Amphithéâtre', capacity: 3, description: 'Grande salle amphithéâtre' },
     { id: 2, name: 'Bureau Admin', capacity: 0, description: 'Bureau administratif' },
@@ -21,7 +20,6 @@ const mockRooms = [
 ];
 
 const httpClient = async (url: string, options: any = {}) => {
-    // Mock implementation for rooms endpoint
     if (url.includes('/rooms')) {
         if (options.method === 'GET' || !options.method) {
             return {
@@ -43,7 +41,6 @@ const httpClient = async (url: string, options: any = {}) => {
             json: body ? JSON.parse(body) : null,
         };
     } catch (error) {
-        // Fallback for any other errors
         return {
             status: 200,
             headers: new Headers(),
