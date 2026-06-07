@@ -1,201 +1,46 @@
-html,
-body,
-#root {
-  height: 100%;
-  margin: 0;
+.ra-layout {
+  background: #f7fafc !important;
 }
 
-body {
-  font-family: Inter, system-ui, sans-serif;
-  background: #090e21;
-  color: #f8fafc;
+.ra-sidebar {
+  background: white !important;
+  border-right: 1px solid #e2e8f0 !important;
 }
 
-body,
-#root,
-.RaLayout-content {
-  background: #090e21;
+.ra-sidebar .RaSidebar-drawerPaper {
+  background: white !important;
 }
 
-.RaLayout-content {
-  padding: 24px !important;
+.ra-title {
+  font-weight: 600 !important;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
 }
 
-.RaAppBar-root,
-.MuiPaper-root,
-.RaSidebar-root,
-.RaMenuItemLink-root,
-.RaMenuItemLink-active {
-  background-color: #111827 !important;
+.RaButton-label {
+  font-weight: 600 !important;
 }
 
-.RaMenuItemLink-active {
-  background-color: rgba(124, 58, 237, 0.16) !important;
-}
-
-.RaDatagrid-headerCell {
-  background: #111827;
-}
-
-.RaDatagrid-row {
-  background: #0f172a;
-}
-
-.RaDatagrid-row:nth-of-type(odd) {
-  background: #111827;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .MuiCard-root {
-  background: #111827 !important;
-  color: #f8fafc !important;
+  animation: fadeIn 0.3s ease-out;
 }
 
-.MuiCardContent-root {
-  padding: 24px !important;
-}
-
-.MuiTypography-root,
-.MuiFormLabel-root,
-.MuiInputLabel-root,
-.MuiInputBase-root {
-  color: #f8fafc !important;
-}
-
-.MuiOutlinedInput-root {
-  background: #0f172a;
-  border-color: rgba(148, 163, 184, 0.16);
-}
-
-.MuiButton-containedPrimary {
-  background-color: #7c3aed !important;
-}
-
-.MuiButton-containedSecondary {
-  background-color: #f97316 !important;
-}
-
-/* Sidebar branding */
-.RaSidebar-root {
-  padding-top: 20px;
-}
-
-.RaSidebar-root .app-branding {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  margin-bottom: 8px;
-}
-
-.RaSidebar-root .app-branding .logo {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #7c3aed, #06b6d4);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-weight: 700;
-}
-
-.RaSidebar-root .app-branding .title {
-  color: #e6eef6;
-  font-weight: 700;
-  font-size: 14px;
-}
-
-/* Move the theme toggle into the sidebar area visually */
-/* removed empty rule */
-
-/* Card layout spacing to mimic mockup */
-.RaLayout-content {
-  padding-left: 40px !important;
-  padding-right: 40px !important;
-}
-
-/* Room card tweaks */
-.MuiCard-root {
-  border-radius: 12px !important;
-}
-
-/* Inject branding using pseudo elements so no component changes are required */
-.RaSidebar-root::before {
-  content: '';
-  display: block;
-  height: 80px;
-}
-
-.RaSidebar-root::after {
-  content: 'EventSync\AAdministration';
-  white-space: pre;
-  display: block;
-  margin: -68px 0 12px 72px;
-  color: #e6eef6;
-  font-weight: 700;
-}
-
-.RaSidebar-root {
-  background: #0f1724 !important;
-}
-
-.RaSidebar-root .logo-fake {
-  position: absolute;
-  left: 16px;
-  top: 14px;
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #7c3aed, #06b6d4);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: 700;
-}
-
-/* Sidebar branding adjustments to avoid overlap with menu */
-.sidebar-branding {
-  pointer-events: none;
-}
-
-.sidebar-branding .logo-fake {
-  pointer-events: none;
-}
-
-/* Light theme overrides */
-html[data-theme="light"] body,
-html[data-theme="light"] #root,
-html[data-theme="light"] .RaLayout-content {
-  background: #e0f7ff;
-  color: #0f172a;
-}
-
-html[data-theme="light"] .RaAppBar-root,
-html[data-theme="light"] .MuiPaper-root,
-html[data-theme="light"] .RaSidebar-root,
-html[data-theme="light"] .RaMenuItemLink-root {
-  background-color: #ffffff !important;
-}
-
-html[data-theme="light"] .RaMenuItemLink-active {
-  background-color: rgba(2, 132, 199, 0.12) !important;
-}
-
-html[data-theme="light"] .MuiCard-root {
-  background: #ffffff !important;
-  color: #0f172a !important;
-  border: 1px solid rgba(2, 132, 199, 0.08);
-}
-
-html[data-theme="light"] .MuiOutlinedInput-root {
-  background: #f8feff;
-  border-color: rgba(2, 132, 199, 0.12);
-}
-
-html[data-theme="light"] .MuiTypography-root,
-html[data-theme="light"] .MuiFormLabel-root,
-html[data-theme="light"] .MuiInputLabel-root,
-html[data-theme="light"] .MuiInputBase-root {
-  color: #0f172a !important;
+.MuiFormHelperText-root.Mui-error {
+  background: #fff5f5;
+  padding: 4px 8px;
+  border-radius: 6px;
+  margin-top: 4px;
 }
