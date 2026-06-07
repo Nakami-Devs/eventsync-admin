@@ -1,0 +1,46 @@
+.ra-layout {
+  background: #f7fafc !important;
+}
+
+.ra-sidebar {
+  background: white !important;
+  border-right: 1px solid #e2e8f0 !important;
+}
+
+.ra-sidebar .RaSidebar-drawerPaper {
+  background: white !important;
+}
+
+.ra-title {
+  font-weight: 600 !important;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+.RaButton-label {
+  font-weight: 600 !important;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.MuiCard-root {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.MuiFormHelperText-root.Mui-error {
+  background: #fff5f5;
+  padding: 4px 8px;
+  border-radius: 6px;
+  margin-top: 4px;
+}
