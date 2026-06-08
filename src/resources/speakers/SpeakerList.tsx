@@ -39,7 +39,8 @@ const SpeakerGrid = () => {
               borderColor:   'divider',
               boxShadow:     '0 2px 8px rgba(0,0,0,0.08)',
               transition:    'all 0.2s',
-              height:        '160px',       
+              height:        '160px', 
+              width:         '275px',      
               display:       'flex',
               flexDirection: 'column',
               '&:hover':     { boxShadow: '0 4px 16px rgba(124,58,237,0.15)', borderColor: '#7C3AED' }
