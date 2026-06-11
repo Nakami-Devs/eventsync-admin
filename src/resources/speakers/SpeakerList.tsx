@@ -1,16 +1,8 @@
 import {
   List, useListContext, RecordContextProvider,
   DeleteWithConfirmButton, EditButton, useRedirect,
-  TopToolbar, CreateButton, ExportButton
 } from 'react-admin'
 import { Grid, Card, CardContent, Avatar, Typography, Box } from '@mui/material'
-
-const SpeakerListActions = () => (
-  <TopToolbar>
-    <ExportButton />
-    <CreateButton label="Créer" />
-  </TopToolbar>
-)
 
 const SpeakerGrid = () => {
   const { data, isPending } = useListContext()
@@ -154,7 +146,6 @@ const SpeakerGrid = () => {
 
 export const SpeakerList = () => (
   <List
-    actions={<SpeakerListActions />}
     sx={{
       '& .RaList-content': { background: 'transparent', boxShadow: 'none' },
       '& .MuiToolbar-root': { background: 'transparent' }
