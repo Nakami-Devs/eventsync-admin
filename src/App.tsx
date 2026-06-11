@@ -19,27 +19,27 @@ import { RoomShow } from './rooms/RoomShow.tsx'
 
 
 const lightTheme = {
-  ...defaultTheme,
-  palette: {
-    ...defaultTheme.palette,
-    primary: { main: '#7C3AED' },
-    background: {
-      default: '#F0F0F5',   
-      paper:   '#FFFFFF',
+    ...defaultTheme,
+    palette: {
+        ...defaultTheme.palette,
+        primary: {main: '#7C3AED'},
+        background: {
+            default: '#F0F0F5',
+            paper: '#FFFFFF',
+        },
     },
-  },
 }
 
 const darkTheme = {
-  ...defaultDarkTheme,
-  palette: {
-    ...defaultDarkTheme.palette,
-    primary: { main: '#7C3AED' },
-    background: {
-      default: '#12132A',
-      paper:   '#1a1b35',
+    ...defaultDarkTheme,
+    palette: {
+        ...defaultDarkTheme.palette,
+        primary: {main: '#7C3AED'},
+        background: {
+            default: '#12132A',
+            paper: '#1a1b35',
+        },
     },
-  },
 }
 
 function App() {
@@ -73,6 +73,9 @@ function App() {
         create={RoomCreate}
         edit={RoomEdit}
         show={RoomShow}
+      />
+      <Resource 
+        name="sessions"
       />
     </Admin>
   )
