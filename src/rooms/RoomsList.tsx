@@ -18,6 +18,37 @@ import {
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import DeleteIcon from "@mui/icons-material/Delete";
 
+const TopToolbarActions = () => (
+    <TopToolbar sx={{ display: "flex", alignItems: "center", width: "100%", p: 2 }}>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            width: "100%",
+                            px: 2
+                        }}
+                    >
+                        <Typography variant="h4" fontWeight={700}>
+                            Salles
+                        </Typography>
+                        <CreateButton
+                            sx={{
+                                backgroundColor: '#7C3AED',
+                                color: '#ffffff',
+                                '&:hover': { backgroundColor: '#9152ff' },
+                                p: '10px 20px',
+                                borderRadius: '8px',
+                                fontSize: '16px',
+                            }}
+                            href="/rooms/create"
+                            label="Nouvelle salle"
+                        />
+                    </Box>
+                </TopToolbar>
+)
+
+
 export const RoomsList = () => {
     const { data, isLoading } = useGetList("rooms");
 
@@ -34,39 +65,15 @@ export const RoomsList = () => {
     return (
         <List
             pagination={false}
-            actions={
-                <TopToolbar>
-                    <CreateButton
-                        sx={{
-                            backgroundColor: '#7C3AED',
-                            color: '#ffffff',
-                            '&:hover': {
-                                backgroundColor: '#9152ff',
-                            },
-                            p: '10px 20px',
-                            borderRadius: '8px',
-                            fontSize: '16px',
-                            m: 2,
-                        }}
-                        href="/rooms/create"
-                        label="Nouvelle salle"
-                    />
-                </TopToolbar>
-            }
+            actions={<TopToolbarActions />}
         >
             <Box
                 sx={{
                     p: 3,
-                    minHeight: "100vh"
+                    minHeight: "100vh",
                 }}
             >
-                <Typography
-                    variant="h4"
-                    fontWeight={700}
-                    mb={4}
-                >
-                    Salles
-                </Typography>
+                    
 
                 <Grid container spacing={3}>
                     {data?.map((room: any) => (
