@@ -36,7 +36,21 @@ export const RoomsList = () => {
             pagination={false}
             actions={
                 <TopToolbar>
-                    <CreateButton label="Nouvelle salle" />
+                    <CreateButton
+                        sx={{
+                            backgroundColor: '#7C3AED',
+                            color: '#ffffff',
+                            '&:hover': {
+                                backgroundColor: '#9152ff',
+                            },
+                            p: '10px 20px',
+                            borderRadius: '8px',
+                            fontSize: '16px',
+                            m: 2,
+                        }}
+                        href="/rooms/create"
+                        label="Nouvelle salle"
+                    />
                 </TopToolbar>
             }
         >
