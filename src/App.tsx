@@ -15,6 +15,7 @@ import { RoomCreate } from "./rooms/RoomCreate.tsx";
 import { RoomEdit } from "./rooms/RoomEdit.tsx";
 import { RoomsList } from "./rooms/RoomsList.tsx"
 import {Dashboard} from "./components/dashboard/Dashboard.tsx";
+import { RoomShow } from './rooms/RoomShow.tsx'
 
 
 const lightTheme = {
@@ -71,6 +72,7 @@ function App() {
         list={RoomsList}
         create={RoomCreate}
         edit={RoomEdit}
+        show={RoomShow}
       />
     </Admin>
   )
