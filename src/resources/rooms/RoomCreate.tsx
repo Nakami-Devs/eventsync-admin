@@ -1,6 +1,5 @@
-import React from 'react';
 import { Create, SimpleForm, TextInput, NumberInput, required, minValue, maxValue } from 'react-admin';
-import { Card, CardContent, Box, Typography } from '@mui/material';
+import { Card, Box, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 const StyledCard = styled(Card)(({ theme }) => ({
@@ -32,7 +31,7 @@ export const RoomCreate = (props: any) => {
       </StyledCard>
 
       <FormCard>
-        <Create {...props} sx={{ '& .RaCreate-main': { background: 'transparent' } }}>
+        <Create {...props} sx={{ '& .RaCreate-main': { background: 'transparent' } }} redirect="list">
           <SimpleForm
             sx={{
               p: 3,

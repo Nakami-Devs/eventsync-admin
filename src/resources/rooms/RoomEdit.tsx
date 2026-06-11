@@ -1,6 +1,5 @@
-import React from 'react';
 import { Edit, SimpleForm, TextInput, NumberInput, required, minValue, maxValue } from 'react-admin';
-import { Card, CardContent, Box, Typography } from '@mui/material';
+import { Card, Box, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 const StyledCard = styled(Card)(({ theme }) => ({

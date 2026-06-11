@@ -1,4 +1,3 @@
-import React from 'react';
 import { List, Datagrid, TextField, NumberField, EditButton, DeleteButton, Filter, TextInput, NumberInput } from 'react-admin';
 import { Card, CardContent, Typography, Box, Chip, Button, Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -10,7 +9,7 @@ const StyledCard = styled(Card)(({ theme }) => ({
   overflow: 'hidden',
 }));
 
-const RoomCard = styled(Card)(({ theme }) => ({
+const RoomCard = styled(Card)(({ }) => ({
   borderRadius: '12px',
   transition: 'all 0.3s ease',
   cursor: 'pointer',
