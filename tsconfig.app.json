@@ -8,7 +8,7 @@
     ],
     "module": "esnext",
     "typeRoots": [
-      "src/types",
+      "src/resources/types",
       "node_modules/@types"
     ],
     "skipLibCheck": true,
