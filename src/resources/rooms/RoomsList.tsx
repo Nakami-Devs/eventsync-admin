@@ -3,7 +3,9 @@ import {
     useGetList,
     useDelete,
     TopToolbar,
-    CreateButton
+    CreateButton,
+    RecordContextProvider,
+    LinkBase
 } from "react-admin";
 
 import {
@@ -20,32 +22,32 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 const TopToolbarActions = () => (
     <TopToolbar sx={{ display: "flex", alignItems: "center", width: "100%", p: 2 }}>
-                    <Box
-                        sx={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            width: "100%",
-                            px: 2
-                        }}
-                    >
-                        <Typography variant="h4" fontWeight={700}>
-                            Salles
-                        </Typography>
-                        <CreateButton
-                            sx={{
-                                backgroundColor: '#7C3AED',
-                                color: '#ffffff',
-                                '&:hover': { backgroundColor: '#9152ff' },
-                                p: '10px 20px',
-                                borderRadius: '8px',
-                                fontSize: '16px',
-                            }}
-                            href="/rooms/create"
-                            label="Nouvelle salle"
-                        />
-                    </Box>
-                </TopToolbar>
+        <Box
+            sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                width: "100%",
+                px: 2
+            }}
+        >
+            <Typography variant="h4" fontWeight={700}>
+                Salles
+            </Typography>
+            <CreateButton
+                sx={{
+                    backgroundColor: '#7C3AED',
+                    color: '#ffffff',
+                    '&:hover': { backgroundColor: '#9152ff' },
+                    p: '10px 20px',
+                    borderRadius: '8px',
+                    fontSize: '16px',
+                }}
+                href="/rooms/create"
+                label="Nouvelle salle"
+            />
+        </Box>
+    </TopToolbar>
 )
 
 
@@ -55,6 +57,7 @@ export const RoomsList = () => {
     const [deleteOne] = useDelete();
 
     const handleDelete = (id: number) => {
+        e.stopPropagation();
         deleteOne("rooms", { id });
     };
 
@@ -73,7 +76,7 @@ export const RoomsList = () => {
                     minHeight: "100vh",
                 }}
             >
-                    
+
 
                 <Grid container spacing={3}>
                     {data?.map((room: any) => (
@@ -81,6 +84,7 @@ export const RoomsList = () => {
                             key={room.id}
                             size={{ xs: 12, md: 6, lg: 4 }}
                         >
+                            <RecordContextProvider value={room}>
                             <Card
                                 sx={{
                                     borderRadius: 4,
@@ -91,6 +95,17 @@ export const RoomsList = () => {
                                     px: 2
                                 }}
                             >
+                                <LinkBase
+                                        to={`/rooms/${room.id}/show`}
+                                        style={{
+                                            display: "flex",
+                                            flex: 1,
+                                            height: "100%",
+                                            alignItems: "center",
+                                            textDecoration: "none",
+                                            color: "inherit"
+                                        }}
+                                    >
                                 <CardContent
                                     sx={{
                                         display: "flex",
@@ -137,6 +152,7 @@ export const RoomsList = () => {
                                         </Typography>
                                     </Box>
                                 </CardContent>
+                                </LinkBase>
 
                                 <IconButton
                                     onClick={() => handleDelete(room.id)}
@@ -151,6 +167,7 @@ export const RoomsList = () => {
                                     <DeleteIcon />
                                 </IconButton>
                             </Card>
+                            </RecordContextProvider>
                         </Grid>
                     ))}
                 </Grid>
