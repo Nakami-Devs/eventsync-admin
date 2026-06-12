@@ -15,6 +15,7 @@ import { RoomCreate } from "./resources/rooms/RoomCreate.tsx";
 import { RoomEdit } from "./resources/rooms/RoomEdit.tsx";
 import { RoomsList } from "./resources/rooms/RoomsList.tsx"
 import {Dashboard} from "./components/dashboard/Dashboard.tsx";
+import { CustomLoginPage } from './components/login/CustomLoginPage.tsx'
 
 
 const lightTheme = {
@@ -50,6 +51,7 @@ function App() {
             layout={AdminLayout}
             theme={lightTheme}
             darkTheme={darkTheme}
+             loginPage={CustomLoginPage} 
         >
             <Resource
                 name="events"
