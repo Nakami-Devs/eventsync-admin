@@ -3,15 +3,14 @@ import {
     SimpleShowLayout, 
     TextField, 
     NumberField, 
-    ArrayField, 
-    SingleFieldList, 
-    ChipField 
+    FunctionField
 } from "react-admin";
 import { 
     Paper, 
     Typography, 
     Divider, 
-    Box 
+    Box, 
+    Chip
 } from "@mui/material";
 
 export const RoomShow = () => {
@@ -41,31 +40,33 @@ export const RoomShow = () => {
                             {" "}personnes
                         </Typography>
                     </Box>
+                     <FunctionField
+                    label="Sessions planifiées"
+                    render={(record: any) => {
+                        const sessions = record?.sessions;
 
-                    <Box sx={{ mb: 2 }}>
-                        <Typography variant="subtitle2" color="textSecondary">
-                            Localisation
-                        </Typography>
-                        <TextField source="location" />
-                    </Box>
+                        if (!sessions || sessions.length === 0) {
+                            return (
+                                <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                                    Aucune session planifiée dans cette salle.
+                                </Typography>
+                            );
+                        }
 
-                    <Box sx={{ mb: 2 }}>
-                        <Typography variant="subtitle2" color="textSecondary">
-                            Équipements
-                        </Typography>
-                        <ArrayField source="equipment">
-                            <SingleFieldList>
-                                <ChipField source="name" size="small" />
-                            </SingleFieldList>
-                        </ArrayField>
-                    </Box>
-
-                    <Box sx={{ mb: 2 }}>
-                        <Typography variant="subtitle2" color="textSecondary">
-                            Description
-                        </Typography>
-                        <TextField source="description" />
-                    </Box>
+                        return (
+                            <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mt: 1 }}>
+                                {sessions.map((session: any, index: number) => (
+                                    <Chip 
+                                        key={session.id || index} 
+                                        label={session.title || `Session #${session.id || index + 1}`} 
+                                        variant="outlined"
+                                        color="primary"
+                                    />
+                                ))}
+                            </Box>
+                        );
+                    }}
+                />
                 </SimpleShowLayout>
             </Paper>
         </Show>
