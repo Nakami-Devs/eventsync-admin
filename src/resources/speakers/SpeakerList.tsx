@@ -24,7 +24,7 @@ const SpeakerListActions = () => (
     <CreateButton label="Créer" />
   </TopToolbar>
 );
-
+    
 const SpeakerGrid = () => {
   const { data, isPending } = useListContext();
   const redirect = useRedirect();
@@ -178,7 +178,6 @@ const SpeakerGrid = () => {
 
 export const SpeakerList = () => (
   <List
-    actions={<SpeakerListActions />}
     sx={{
       "& .RaList-content": { background: "transparent", boxShadow: "none" },
       "& .MuiToolbar-root": { background: "transparent" },
