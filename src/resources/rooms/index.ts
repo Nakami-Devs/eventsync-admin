@@ -1,14 +1,14 @@
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 
-import { RoomsList } from "../../rooms/RoomsList";
-import { RoomCreate } from "../../rooms/RoomCreate";
-import { RoomEdit } from "../../rooms/RoomEdit";
+import { RoomsList } from "./RoomsList";
+import { RoomCreate } from "./RoomCreate";
+import { RoomEdit } from "./RoomEdit";
 import { RoomShow } from "./RoomShow";
 
 export default {
-    list: RoomsList,
-    create: RoomCreate,
-    edit: RoomEdit,
-    show: RoomShow,
-    icon: MeetingRoomIcon
+  list: RoomsList,
+  create: RoomCreate,
+  edit: RoomEdit,
+  show: RoomShow,
+  icon: MeetingRoomIcon,
 };
