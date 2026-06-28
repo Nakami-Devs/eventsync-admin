@@ -24,6 +24,7 @@ import { EventShow } from './resources/events/EventShow.tsx'
 
 
 
+
 const lightTheme = {
   ...defaultTheme,
   palette: {
