@@ -3,7 +3,8 @@ import {
     useGetList,
     useDelete,
     TopToolbar,
-    CreateButton
+    CreateButton,
+    RecordContextProvider
 } from "react-admin";
 import { useNavigate } from "react-router-dom";
 
@@ -84,83 +85,85 @@ export const RoomsList = () => {
                             key={room.id}
                             size={{ xs: 12, md: 6, lg: 4 }}
                         >
-                            <Card
-                                onClick={() => handleCardClick(room.id)}
-                                sx={{
-                                    borderRadius: 4,
-                                    height: 120,
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    alignItems: "center",
-                                    px: 2,
-                                    cursor: "pointer",
-                                    transition: "transform 0.2s, box-shadow 0.2s",
-                                    "&:hover": {
-                                        transform: "translateY(-4px)",
-                                        boxShadow: 3
-                                    }
-                                }}
-                            >
-                                <CardContent
+                            <RecordContextProvider value={room}>
+                                <Card
+                                    onClick={() => handleCardClick(room.id)}
                                     sx={{
+                                        borderRadius: 4,
+                                        height: 120,
                                         display: "flex",
+                                        justifyContent: "space-between",
                                         alignItems: "center",
-                                        gap: 2,
-                                        flex: 1
-                                    }}
-                                >
-                                    <Box
-                                        sx={{
-                                            width: 50,
-                                            height: 50,
-                                            borderRadius: "50%",
-                                            bgcolor: "#0f2c44",
-                                            display: "flex",
-                                            alignItems: "center",
-                                            justifyContent: "center"
-                                        }}
-                                    >
-                                        <MeetingRoomIcon
-                                            sx={{
-                                                color: "#00d4ff"
-                                            }}
-                                        />
-                                    </Box>
-
-                                    <Box>
-                                        <Typography fontWeight={700}>
-                                            {room.name}
-                                        </Typography>
-
-                                        <Typography
-                                            variant="body2"
-                                            color="text.secondary"
-                                        >
-                                            Capacité : {room.capacity}
-                                        </Typography>
-
-                                        <Typography
-                                            variant="caption"
-                                            color="text.secondary"
-                                        >
-                                            {room.sessions?.length ?? 0} sessions
-                                        </Typography>
-                                    </Box>
-                                </CardContent>
-
-                                <IconButton
-                                    onClick={(e) => handleDelete(room.id, e)}
-                                    sx={{
-                                        bgcolor: "#ef4444",
-                                        color: "#fff",
+                                        px: 2,
+                                        cursor: "pointer",
+                                        transition: "transform 0.2s, box-shadow 0.2s",
                                         "&:hover": {
-                                            bgcolor: "#dc2626"
+                                            transform: "translateY(-4px)",
+                                            boxShadow: 3
                                         }
                                     }}
                                 >
-                                    <DeleteIcon />
-                                </IconButton>
-                            </Card>
+                                    <CardContent
+                                        sx={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                            gap: 2,
+                                            flex: 1
+                                        }}
+                                    >
+                                        <Box
+                                            sx={{
+                                                width: 50,
+                                                height: 50,
+                                                borderRadius: "50%",
+                                                bgcolor: "#0f2c44",
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center"
+                                            }}
+                                        >
+                                            <MeetingRoomIcon
+                                                sx={{
+                                                    color: "#00d4ff"
+                                                }}
+                                            />
+                                        </Box>
+
+                                        <Box>
+                                            <Typography fontWeight={700}>
+                                                {room.name}
+                                            </Typography>
+
+                                            <Typography
+                                                variant="body2"
+                                                color="text.secondary"
+                                            >
+                                                Capacité : {room.capacity}
+                                            </Typography>
+
+                                            <Typography
+                                                variant="caption"
+                                                color="text.secondary"
+                                            >
+                                                {room.sessions?.length ?? 0} sessions
+                                            </Typography>
+                                        </Box>
+                                    </CardContent>
+
+                                    <IconButton
+                                        onClick={(e) => handleDelete(room.id, e)}
+                                        sx={{
+                                            bgcolor: "#ef4444",
+                                            color: "#fff",
+                                            "&:hover": {
+                                                bgcolor: "#dc2626"
+                                            }
+                                        }}
+                                    >
+                                        <DeleteIcon />
+                                    </IconButton>
+                                </Card>
+                            </RecordContextProvider>
                         </Grid>
                     ))}
                 </Grid>
