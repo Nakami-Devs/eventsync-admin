@@ -20,6 +20,7 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import DescriptionIcon from "@mui/icons-material/Description";
 import EventIcon from "@mui/icons-material/Event";
+import { SessionsBlock } from "./sessions/SessionsBlock";
 
 const EventShowActions = () => (
   <TopToolbar>
@@ -207,6 +208,7 @@ const EventContent = () => {
           </CardContent>
         </Card>
       </Stack>
+      <SessionsBlock />
     </Box>
   );
 };
