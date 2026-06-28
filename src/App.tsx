@@ -1,4 +1,4 @@
-import './App'
+import './App.css'
 import { Admin, Resource, defaultDarkTheme, defaultTheme } from 'react-admin'
 import { authProvider } from './authProvider.ts'
 import { dataProvider } from './dataProvider.ts'
@@ -17,6 +17,11 @@ import { RoomsList } from "./resources/rooms/RoomsList.tsx"
 import { Dashboard } from "./components/dashboard/Dashboard.tsx";
 import { RoomShow } from './resources/rooms/RoomShow.tsx'
 import { CustomLoginPage } from './components/login/CustomLoginPage.tsx'
+import { SessionCreate } from './resources/events/sessions/SessionCreate.tsx'
+import { SessionEdit } from './resources/events/sessions/SessionEdit.tsx'
+import { SessionList } from './resources/events/sessions/SessionList.tsx'
+import { EventShow } from './resources/events/EventShow.tsx'
+
 
 
 
@@ -60,6 +65,7 @@ function App() {
         list={EventList}
         edit={EventEdit}
         create={EventCreate}
+        show={EventShow}
       />
       <Resource
         name="speakers"
@@ -79,6 +85,9 @@ function App() {
       />
       <Resource
         name="sessions"
+        list={SessionList}
+        create={SessionCreate}
+        edit={SessionEdit}
       />
     </Admin>
   )
