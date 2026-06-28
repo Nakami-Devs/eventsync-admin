@@ -145,26 +145,6 @@ const EventRowList = () => {
               <Box
                 onClick={(e) => {
                   e.stopPropagation();
-                  redirect(`/sessions?filter=${encodeURIComponent(JSON.stringify({ id_event: event.id }))}`)
-                }
-                }
-                sx={{
-                  display: "flex", alignItems: "center", gap: 0.5,
-                  px: 2, py: 0.8, borderRadius: "10px",
-                  border: `1.5px solid ${isDark ? "#3d3560" : "#e5e0f8"}`,
-                  cursor: "pointer",
-                  "&:hover": { background: isDark ? "#2a2550" : "#f3f0ff" },
-                }}
-              >
-                <VideocamIcon sx={{ fontSize: "1rem", color: "#7c3aed" }} />
-                <Typography variant="body2" fontWeight={600} sx={{ color: "#7c3aed" }}>
-                  Sessions
-                </Typography>
-              </Box>
-
-              <Box
-                onClick={(e) => {
-                  e.stopPropagation();
                   redirect(`/events/${event.id}/edit`)
                 }
                 }
