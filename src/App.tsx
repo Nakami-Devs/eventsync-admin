@@ -21,6 +21,7 @@ import { SessionCreate } from './resources/events/sessions/SessionCreate.tsx'
 import { SessionEdit } from './resources/events/sessions/SessionEdit.tsx'
 import { SessionList } from './resources/events/sessions/SessionList.tsx'
 import { EventShow } from './resources/events/EventShow.tsx'
+import { SessionShow } from './resources/events/sessions/SessionShow.tsx'
 
 
 
@@ -88,6 +89,7 @@ function App() {
         list={SessionList}
         create={SessionCreate}
         edit={SessionEdit}
+        show={SessionShow}
       />
     </Admin>
   )
