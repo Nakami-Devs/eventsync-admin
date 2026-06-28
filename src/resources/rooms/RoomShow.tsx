@@ -14,6 +14,13 @@ import {
     Box 
 } from "@mui/material";
 
+/*
+Create and delete are working as expected. However, clicking on a card 
+doesn't navigate anywhere — no show, no edit, no action at all.
+ Please fix the card click behavior. Also, please move the files
+  into resources/rooms (replace the existing ones) and put index.ts inside types/.
+
+*/
 export const RoomShow = () => {
     return (
         <Show>

@@ -11,9 +11,9 @@ import { AdminLayout } from './components/layout/Layout.tsx';
 import { EventList } from './resources/events/EventList.tsx';
 import { EventEdit } from './resources/events/EventEdit.tsx';
 import { EventCreate } from './resources/events/EventCreate.tsx';
-import { RoomCreate } from "./rooms/RoomCreate.tsx";
-import { RoomEdit } from "./rooms/RoomEdit.tsx";
-import { RoomsList } from "./rooms/RoomsList.tsx"
+import { RoomCreate } from "./resources/rooms/RoomCreate.tsx";
+import { RoomEdit } from "./resources/rooms/RoomEdit.tsx";
+import { RoomsList } from "./resources/rooms/RoomsList.tsx"
 import { Dashboard } from "./components/dashboard/Dashboard.tsx";
 import { RoomShow } from './resources/rooms/RoomShow.tsx'
 
