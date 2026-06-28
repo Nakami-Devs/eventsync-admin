@@ -1,4 +1,4 @@
-import { Card, CardContent, Typography, Chip, Divider, Box, CircularProgress, Stack } from "@mui/material"
+import { Card, CardContent, Typography, Chip, Divider, Box, CircularProgress, Stack, Avatar } from "@mui/material"
 import { useRecordContext, useRedirect, useGetManyReference } from "react-admin"
 import VideocamIcon from "@mui/icons-material/Videocam";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
@@ -99,6 +99,40 @@ export const SessionsBlock = () => {
                           {session.room_name ?? session.id_room}
                         </Typography>
                       </Box>
+                    )}
+                    {session.speakers?.length > 0 && (
+                      <Box display="flex" alignItems="center" gap={1} mt={1}>
+                        {session.speakers.map((speaker: any) => (
+                        <Box
+                            key={speaker.id}
+                            display="flex"
+                            alignItems="center"
+                            gap={0.5}
+                            onClick={(e) => {
+                            e.stopPropagation()
+                            redirect(`/speakers/${speaker.id}/show`)
+                            }}
+                            sx={{ cursor: 'pointer', '&:hover': { opacity: 0.8 } }}
+                        >
+                            <Avatar
+                            sx={{ width: 24, height: 24, fontSize: '0.7rem', bgcolor: '#5B3FD6' }}
+                            >
+                            {speaker.profile_pic ? (
+                                <img
+                                src={speaker.profile_pic}
+                                alt={speaker.full_name}
+                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                />
+                            ) : (
+                                <span style={{ fontSize: '0.7rem' }}>{speaker.full_name?.charAt(0)}</span>
+                            )}
+                            </Avatar>
+                            <Typography variant="body2" sx={{ color: '#a78bfa' }}>
+                            {speaker.full_name}
+                            </Typography>
+                        </Box>
+                        ))}
+                    </Box>
                     )}
                   </Stack>
                 </Box>
