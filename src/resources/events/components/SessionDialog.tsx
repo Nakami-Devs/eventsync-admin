@@ -5,6 +5,7 @@ import {
   Dialog, DialogTitle, DialogContent, DialogActions,
   Button, TextField, Stack, FormControl, InputLabel,
   Select, MenuItem, OutlinedInput, Chip, Box,
+  Typography,
 } from '@mui/material'
 import { inputSx } from '../formStyles'
 
@@ -23,6 +24,8 @@ interface SessionDialogProps {
   onSubmit: (data: SessionFormData) => void
   initial?: Partial<SessionFormData>
   mode: 'create' | 'edit'
+  eventStart?: string
+  eventEnd?: string
 }
 
 const empty: SessionFormData = {
@@ -41,11 +44,12 @@ const toLocal = (iso: string) => {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`
 }
 
-export const SessionDialog = ({ open, onClose, onSubmit, initial, mode }: SessionDialogProps) => {
+export const SessionDialog = ({ open, onClose, onSubmit, initial, mode, eventStart, eventEnd }: SessionDialogProps) => {
   const { data: rooms = [] } = useGetList('rooms', { pagination: { page: 1, perPage: 100 } })
   const { data: speakers = [] } = useGetList('speakers', { pagination: { page: 1, perPage: 100 } })
 
   const [form, setForm] = useState<SessionFormData>({ ...empty, ...initial })
+  const [error, setError] = useState<string | null>(null)
 
   const isValid = form.title && form.start_time && form.end_time && form.id_room
 
@@ -54,13 +58,47 @@ export const SessionDialog = ({ open, onClose, onSubmit, initial, mode }: Sessio
   }
 
   const handleSubmit = () => {
-    if (isValid) onSubmit(form)
+  if (!isValid) return
+
+  const start = new Date(form.start_time)
+  const end = new Date(form.end_time)
+  const now = new Date()
+
+  if (start < now) {
+    setError('Impossible de créer une session dans le passé.')
+    return
+  }
+
+  if (start >= end) {
+    setError('L\'heure de début doit être avant l\'heure de fin.')
+    return
+  }
+
+  if (eventStart && eventEnd) {
+    const evStart = new Date(eventStart)
+    const evEnd = new Date(eventEnd)
+
+    if (start < evStart || end > evEnd) {
+      setError('Les horaires de la session doivent être compris dans les dates de l\'événement.')
+      return
+    }
+  }
+
+  onSubmit(form)
+  setForm(empty)
+  setError(null)
+  onClose()
+}
+   const handleClose = () => {
+    setForm(empty)
+    setError(null)
+    onClose()
   }
 
   return (
     <Dialog
       open={open}
-      onClose={onClose}
+      onClose={handleClose}
       maxWidth="sm"
       fullWidth
       PaperProps={{ sx: { borderRadius: '16px', background: '#1e1c2e' } }}
@@ -137,6 +175,12 @@ export const SessionDialog = ({ open, onClose, onSubmit, initial, mode }: Sessio
           </FormControl>
         </Stack>
       </DialogContent>
+
+      {error && (
+        <Typography color="error" variant="body2" sx={{ px: 3, pb: 1 }}>
+          {error}
+        </Typography>
+      )}
 
       <DialogActions sx={{ px: 3, pb: 3, gap: 1 }}>
         <Button onClick={onClose} sx={{ color: '#8b8fa8', borderRadius: '10px' }}>

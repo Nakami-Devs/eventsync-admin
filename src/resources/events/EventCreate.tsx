@@ -35,15 +35,51 @@ const EventCreateForm = () => {
      const handleChange = (field: string, value: string) =>
         setForm(f => ({ ...f, [field]: value }))
     
-      const handleAddSession = (session: SessionFormData) =>
+      const handleAddSession = (session: SessionFormData) => {
+        const isDuplicate = sessions.some(
+          s => s.title === session.title && s.start_time === session.start_time
+        )
+        if (isDuplicate) {
+          notify('Une session avec ce titre et cet horaire existe déjà', { type: 'warning' })
+          return
+        }
         setSessions(prev => [...prev, session])
+        setDialogOpen(false)
+      }
     
       const handleRemoveSession = (index: number) =>
         setSessions(prev => prev.filter((_, i) => i !== index))
     
       const handleSubmit = async () => {
         if (!isValid) return
+
+        const start = new Date(form.start_date)
+        const end = new Date(form.end_date)
+        const now = new Date()
+        
+        if (start >= end) {
+          notify('La date de fin doit être après la date de début', { type: 'warning' })
+          return
+        }
+
+         if (start < now) {
+          notify('Impossible de créer un événement dans le passé', { type: 'warning' })
+          return
+        }
+
+        const invalidSessions = sessions.filter(s => {
+        const sStart = new Date(s.start_time)
+        const sEnd = new Date(s.end_time)
+        return sStart < start || sEnd > end
+        })
+        
+        if (invalidSessions.length > 0) {
+          notify(`Certaines sessions sont en dehors des dates de l'événement`, { type: 'warning' })
+          return
+        }
+
         setSubmitting(true)
+
         try {
           const event: any = await new Promise((resolve, reject) => {
             create('events', { data: form }, { onSuccess: resolve, onError: reject })
@@ -131,7 +167,14 @@ const EventCreateForm = () => {
         {submitting ? 'Création en cours...' : "Créer l'événement"}
       </Button>
 
-      <SessionDialog open={dialogOpen} mode="create" onClose={() => setDialogOpen(false)} onSubmit={handleAddSession} />
+      <SessionDialog 
+        open={dialogOpen} 
+        mode="create" 
+        onClose={() => setDialogOpen(false)} 
+        onSubmit={handleAddSession} 
+        eventStart={form.start_date}
+        eventEnd={form.end_date}  
+      />
     </Box>
   )
 }
