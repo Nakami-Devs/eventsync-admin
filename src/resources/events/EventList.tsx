@@ -20,7 +20,7 @@ import { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import VideocamIcon from "@mui/icons-material/Videocam";
+import MicIcon from '@mui/icons-material/Mic';
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
@@ -136,6 +136,20 @@ const EventRowList = () => {
                     sx={{ color: isDark ? "#8b8fa8" : "#6b7280" }}
                   >
                     {event.place || "—"}
+                  </Typography>
+                </Box>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+                  <MicIcon
+                    sx={{
+                      fontSize: "0.9rem",
+                      color: isDark ? "#8b8fa8" : "#6b7280",
+                    }}
+                  />
+                  <Typography
+                    variant="body2"
+                    sx={{ color: isDark ? "#8b8fa8" : "#6b7280" }}
+                  >
+                    {`${event.sessions.length} session${event.sessions.length > 1 ? 's' : ''}` || "—"}
                   </Typography>
                 </Box>
               </Box>
