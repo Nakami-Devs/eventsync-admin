@@ -70,6 +70,11 @@ const EventRowList = () => {
         {data?.map((event, index) => (
           <Box
             key={event.id}
+            onClick={(e) => {
+              e.stopPropagation();
+              redirect(`/events/${event.id}/show`)
+            }
+            }
             sx={{
               background: isDark ? "#1e2235" : "#ffffff",
               borderRadius: "16px",
@@ -138,8 +143,10 @@ const EventRowList = () => {
 
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <Box
-                onClick={() =>
-                  redirect(`/sessions?filter=${JSON.stringify({ event_id: event.id })}`)
+                onClick={(e) => {
+                  e.stopPropagation();
+                  redirect(`/sessions?filter=${encodeURIComponent(JSON.stringify({ id_event: event.id }))}`)
+                }
                 }
                 sx={{
                   display: "flex", alignItems: "center", gap: 0.5,
@@ -156,7 +163,11 @@ const EventRowList = () => {
               </Box>
 
               <Box
-                onClick={() => redirect(`/events/${event.id}`)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  redirect(`/events/${event.id}/edit`)
+                }
+                }
                 sx={{
                   display: "flex", alignItems: "center", gap: 0.5,
                   px: 2, py: 0.8, borderRadius: "10px",
@@ -173,7 +184,11 @@ const EventRowList = () => {
 
               <IconButton
                 size="small"
-                onClick={() => handleDeleteClick(event)}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  handleDeleteClick(event)
+                }
+                }
                 sx={{
                   color: "#ef4444",
                   border: `1.5px solid ${isDark ? "#3d2020" : "#fecaca"}`,
