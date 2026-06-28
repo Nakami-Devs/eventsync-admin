@@ -1,21 +1,21 @@
-import simpleRestProvider from 'ra-data-simple-rest'
-import { fetchUtils } from 'react-admin'
+/// <reference types="vite/client" />
+import simpleRestProvider from "ra-data-simple-rest";
+import { fetchUtils } from "react-admin";
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api'
+const API_URL = "/api";
 
 const httpClient = (url: string, options: fetchUtils.Options = {}) => {
-  const token = localStorage.getItem('token')
+  const token = localStorage.getItem("token");
   if (!options.headers) {
-    options.headers = new Headers({ 'Content-Type': 'application/json' })
+    options.headers = new Headers({ "Content-Type": "application/json" });
   }
   if (token) {
-    (options.headers as Headers).set('Authorization', `Bearer ${token}`)
+    (options.headers as Headers).set("Authorization", `Bearer ${token}`);
   }
-  return fetchUtils.fetchJson(url, options)
-}
+  return fetchUtils.fetchJson(url, options);
+};
 
-const baseProvider = simpleRestProvider(API_URL, httpClient)
-
+const baseProvider = simpleRestProvider(API_URL, httpClient);
 
 export const dataProvider = {
   ...baseProvider,
@@ -36,7 +36,7 @@ export const dataProvider = {
       })
     }
 
-    const response = await httpClient(url)
+    const response = await httpClient(url);
 
     const contentRange = response.headers.get('X-Total-Count')
     const total = contentRange

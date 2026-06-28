@@ -14,6 +14,7 @@ const inputSx = {
 export const SpeakerCreate = () => (
   <Create
     title="Nouvel intervenant"
+    redirect="list"
     sx={{ '& .RaCreate-main': { background: 'transparent' } }}
   >
     <SimpleForm
