@@ -1,4 +1,4 @@
-import { Create, SimpleForm, TextInput, DateTimeInput, ReferenceInput, SelectInput, required } from 'react-admin';
+import { Create, SimpleForm, TextInput, DateTimeInput, ReferenceInput, SelectInput, required, ReferenceArrayInput, SelectArrayInput } from 'react-admin';
 import { useParams } from 'react-router-dom';
 
 export const SessionCreate = () => {
@@ -16,9 +16,9 @@ export const SessionCreate = () => {
           <SelectInput optionText="name" validate={required()}/>
         </ReferenceInput>
         
-        <ReferenceInput source="speaker_ids" reference="speakers">
-          <SelectInput optionText="full_name" multiline />
-        </ReferenceInput>
+        <ReferenceArrayInput source="speaker_ids" reference="speakers">
+          <SelectArrayInput optionText="full_name" />
+        </ReferenceArrayInput>
         
         <TextInput source="id_event" defaultValue={eventId} hidden />
       </SimpleForm>

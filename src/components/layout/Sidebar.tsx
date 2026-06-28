@@ -81,11 +81,6 @@ export const Sidebar = (props: any) => {
                 primaryText="Salles"
                 leftIcon={<MeetingRoomIcon/>}
             />
-            <Menu.Item
-                to="/sessions"
-                primaryText="Sessions"
-                leftIcon={<EventIcon/>}
-            />
 
             <Divider sx={{ my: 1 }} />
 

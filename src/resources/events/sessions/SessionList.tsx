@@ -21,7 +21,7 @@ export const SessionList = () => {
   return (
     <List
       resource="sessions"
-      filter={{ eventId: currentEventId }}
+      filter={{ id_event: currentEventId }}
       actions={<SessionActions eventId={currentEventId as string} />}
       empty={<div>Aucune session pour cet événement.</div>}
     >
@@ -32,6 +32,9 @@ export const SessionList = () => {
         <DateField source="end_time" showTime />
         <ReferenceField source="id_room" reference="rooms">
           <TextField source="name" />
+        </ReferenceField>
+        <ReferenceField source="speaker_ids" reference="speakers">
+          <TextField source="full_name" />
         </ReferenceField>
         <EditButton to={`/events/${currentEventId}/sessions/:id/edit`} />
         <DeleteButton mutationMode="pessimistic" />
