@@ -1,4 +1,4 @@
-import './App.css'
+import './App'
 import { Admin, Resource, defaultDarkTheme, defaultTheme } from 'react-admin'
 import { authProvider } from './authProvider.ts'
 import { dataProvider } from './dataProvider.ts'
