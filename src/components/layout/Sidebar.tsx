@@ -6,8 +6,8 @@ import Brightness6Icon from '@mui/icons-material/Brightness6';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Box, Divider,  Typography } from "@mui/material"
-import {useTheme} from "../../hooks/useTheme.ts";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useTheme } from '../../hooks/useTheme';
 
 const SIDEBAR_BG = '#1a1b3e'
 const ACTIVE_BG = 'rgba(124, 58, 237, 0.25)'

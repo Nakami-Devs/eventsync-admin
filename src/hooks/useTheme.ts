@@ -1,18 +1,11 @@
-import { useState, useEffect } from "react";
+import { useTheme as useRATheme } from 'react-admin'
 
 export const useTheme = () => {
-  const [mode, setMode] = useState<"light" | "dark">(() => {
-    const saved = localStorage.getItem("theme");
-    return (saved as "light" | "dark") || "light";
-  });
-
-  useEffect(() => {
-    localStorage.setItem("theme", mode);
-  }, [mode]);
+  const [theme, setTheme] = useRATheme()
 
   const toggleTheme = () => {
-    setMode((prev) => (prev === "light" ? "dark" : "light"));
-  };
+    setTheme(theme === 'dark' ? 'light' : 'dark')
+  }
 
-  return { mode, toggleTheme };
-};
+  return { mode: theme, toggleTheme }
+}
