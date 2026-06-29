@@ -22,6 +22,8 @@ import { SessionEdit } from './resources/events/sessions/SessionEdit.tsx'
 import { SessionList } from './resources/events/sessions/SessionList.tsx'
 import { EventShow } from './resources/events/EventShow.tsx'
 import { SessionShow } from './resources/events/sessions/SessionShow.tsx'
+import { CustomLoading }  from './components/loading/CustomLoading.tsx'
+import { CustomCatchAll } from './components/error/CustomCatchAll.tsx'
 
 
 
@@ -60,6 +62,8 @@ function App() {
       theme={lightTheme}
       darkTheme={darkTheme}
       loginPage={CustomLoginPage}
+      loading={CustomLoading}      
+      catchAll={CustomCatchAll} 
     >
       <Resource
         name="events"
