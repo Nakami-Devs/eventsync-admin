@@ -38,6 +38,9 @@ const lightTheme = {
       paper: '#FFFFFF',
     },
   },
+   typography: {
+    fontFamily: '"Poppins", "Roboto", "Helvetica", "Arial", sans-serif',
+  },
 }
 
 const darkTheme = {
@@ -49,6 +52,9 @@ const darkTheme = {
       default: '#12132A',
       paper: '#1a1b35',
     },
+  },
+   typography: {
+    fontFamily: '"Poppins", "Roboto", "Helvetica", "Arial", sans-serif',
   },
 }
 
