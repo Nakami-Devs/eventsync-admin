@@ -1,91 +1,68 @@
-import {Container, Stack, Grid, Typography, Paper} from '@mui/material';
-import {useGetList} from "react-admin";
-import {StatCard} from "../StatCard.tsx";
-import {useNavigate} from "react-router-dom";
+import { Container, Stack, Grid, Typography, Paper, Box } from '@mui/material';
+import { useGetList } from "react-admin";
+import { StatCard } from "../StatCard.tsx";
+import { useNavigate } from "react-router-dom";
 import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
+    BarChart,
+    Bar,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Tooltip,
+    Legend,
+    ResponsiveContainer,
 } from 'recharts';
 
 export const Dashboard = () => {
-    const {total: totalEvents, isPending: p1} = useGetList(
+
+    const { data: events, isPending: p1 } = useGetList(
         "events",
-        {
-            pagination:
-                {page: 1, perPage: 1}
-        }
+        { pagination: { page: 1, perPage: 1000 } }
     )
 
-    const {total: totalSpeakers, isPending: p2} = useGetList(
+    const { total: totalSpeakers, isPending: p2 } = useGetList(
         "speakers",
         {
             pagination:
-                {page: 1, perPage: 1}
+                { page: 1, perPage: 1 }
         }
     )
 
-    const {data: events, isPending: p3} = useGetList(
-        "events",
-        {pagination: {page: 1, perPage: 1000}}
-    )
-
-    const {data: allSessions, isPending: p4} = useGetList(
+    const { data: allSessions, isPending: p3 } = useGetList(
         "sessions",
         {
-            pagination: 
-            {page: 1, perPage: 1000}
+            pagination:
+                { page: 1, perPage: 1000 }
         }
     )
-
     const now = new Date()
-    const liveSessionsCount = events?.reduce((acc, event: any) => {
-        const sessions = event.sessions || []
-        const live = sessions.filter((session: any) => {
-            const start = new Date(session.start_time)
-            const end = new Date(session.end_time)
-            return start <= now && now <= end
-        }).length
-        return acc + live
-    }, 0) || 0
+    const totalEvents = events?.length || 0
+    const totalSessions = allSessions?.length || 0
 
-    const sessionsByEventData = events?.map((event: any) => ({
-        name: event.title.length > 15 ? event.title.substring(0, 15) + '...' : event.title,
-        sessions: event.sessions?.length || 0,
-        fullTitle: event.title,
-    })) || []
-
-     const totalSessions = allSessions?.length || 0
     const liveSessions = allSessions?.filter((s: any) => {
         const start = new Date(s.start_time)
         const end = new Date(s.end_time)
         return start <= now && now <= end
     }).length || 0
+
     const pastSessions = totalSessions - liveSessions
 
-    const sessionStatusData = [
-        { name: 'Sessions en cours', value: liveSessions, color: '#7C3AED' },
-        { name: 'Sessions terminées', value: pastSessions, color: '#A78BFA' },
-    ]
+    const sessionsByEventData = events?.map((event: any) => {
+        const sessionCount = allSessions?.filter(
+            (s: any) => s.id_event === event.id
+        ).length || 0
 
-    const sessionsByRoom = allSessions?.reduce((acc: any, session: any) => {
-        const roomName = session.room?.name || 'Sans salle'
-        acc[roomName] = (acc[roomName] || 0) + 1
-        return acc
-    }, {}) || {}
+        return {
+            name: event.title?.length > 15 ? event.title.substring(0, 15) + '...' : event.title || 'Sans titre',
+            sessions: sessionCount,
+            fullTitle: event.title || 'Sans titre',
+        }
+    }) || []
 
-    const sessionsByRoomData = Object.entries(sessionsByRoom).map(([name, value]) => ({
-        name,
-        sessions: value,
-    }))
+    const hasSessionData = sessionsByEventData.some(d => d.sessions > 0)
+
+    const maxSessions = Math.max(...sessionsByEventData.map(d => d.sessions), 0)
+    const yAxisMax = Math.max(maxSessions + 1, 5)
 
     const navigate = useNavigate();
 
@@ -120,10 +97,10 @@ export const Dashboard = () => {
                     <StatCard title="Intervenants" value={totalSpeakers} isPending={p2} />
                 </Grid>
                 <Grid size={{ xs: 12, sm: 6, md: 3 }} onClick={handleSessionClick} sx={{ cursor: 'pointer' }}>
-                    <StatCard title="Sessions totales" value={totalSessions} isPending={p4} />
+                    <StatCard title="Sessions totales" value={totalSessions} isPending={p3} />
                 </Grid>
                 <Grid size={{ xs: 12, sm: 6, md: 3 }} onClick={handleSessionClick} sx={{ cursor: 'pointer' }}>
-                    <StatCard title="Sessions en cours" value={liveSessionsCount} isPending={p3} />
+                    <StatCard title="Sessions en cours" value={liveSessions} isPending={p3} />
                 </Grid>
             </Grid>
 
@@ -133,21 +110,33 @@ export const Dashboard = () => {
                         <Typography variant="h6" gutterBottom>
                             Sessions par événement
                         </Typography>
-                        <ResponsiveContainer width="100%" height={300}>
-                            <BarChart data={sessionsByEventData}>
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="name" />
-                                <YAxis />
-                                <Tooltip 
-                                    formatter={(value, name, props) => {
-                                        const item = props.payload
-                                        return [`${value} sessions`, item?.payload?.fullTitle || '']
-                                    }}
-                                />
-                                <Legend />
-                                <Bar dataKey="sessions" fill="#7C3AED" radius={[4, 4, 0, 0]} />
-                            </BarChart>
-                        </ResponsiveContainer>
+                        {!hasSessionData ? (
+                            <Box display="flex" justifyContent="center" alignItems="center" height={300}>
+                                <Typography sx={{ color: '#8b8fa8' }}>
+                                    Aucune session pour le moment
+                                </Typography>
+                            </Box>
+                        ) : (
+                            <ResponsiveContainer width="100%" height={300}>
+                                <BarChart data={sessionsByEventData}>
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="name" />
+                                    <YAxis
+                                        allowDecimals={false}
+                                        domain={[0, yAxisMax]}
+                                        tickCount={yAxisMax + 1}
+                                    />
+                                    <Tooltip
+                                        formatter={(value, name, props) => {
+                                            const item = props?.payload
+                                            return [`${value} session${value > 1 ? 's' : ''}`, item?.fullTitle || '']
+                                        }}
+                                    />
+                                    <Legend />
+                                    <Bar dataKey="sessions" fill="#7C3AED" radius={[4, 4, 0, 0]} />
+                                </BarChart>
+                            </ResponsiveContainer>
+                        )}
                     </Paper>
                 </Grid>
             </Grid>
