@@ -46,7 +46,7 @@ const SpeakerGrid = () => {
   return (
     <Grid container spacing={2} sx={{ p: 2 }}>
       {data.map((speaker) => (
-        <Grid size={{ xs: 12, sm: 6, md: 4 }} key={speaker.id}>
+        <Grid size={{ xs: 12, sm: 6, md: 3 }} key={speaker.id}>
           <RecordContextProvider value={speaker}>
             <Card
               sx={{
@@ -56,7 +56,7 @@ const SpeakerGrid = () => {
                 boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
                 transition: "all 0.2s",
                 height: "160px",
-                width: "275px",
+                width: "100%",
                 display: "flex",
                 flexDirection: "column",
                 "&:hover": {

@@ -76,5 +76,22 @@ export const dataProvider = {
     }
 
     return baseProvider.create(resource, params)
+  },
+  getManyReference: async (resource: string, params: any) => {
+  const { target, id, pagination, sort } = params
+  const { page, perPage } = pagination
+  const { field, order } = sort
+  const start = (page - 1) * perPage
+  const end = page * perPage
+
+  const url = `${API_URL}/${resource}?${target}=${id}&_start=${start}&_end=${end}&_sort=${field}&_order=${order}`
+
+  const response = await httpClient(url)
+  const total = parseInt(response.headers.get('X-Total-Count') ?? '0', 10)
+
+  return {
+    data: response.json,
+    total,
   }
+},
 }

@@ -5,7 +5,7 @@ export const SessionEdit = () => {
     const { id: eventId } = useParams();
 
     return (
-        <Edit resource="sessions">
+        <Edit resource="sessions" redirect="list">
             <SimpleForm>
                 <TextInput source="title" validate={required()} />
                 <TextInput source="description" multiline validate={required()} />
