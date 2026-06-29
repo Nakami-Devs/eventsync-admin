@@ -1,5 +1,5 @@
 import { Container, Stack, Grid, Typography, Paper, Box } from '@mui/material';
-import { useGetList } from "react-admin";
+import { useGetList, useNotify } from "react-admin";
 import { StatCard } from "../StatCard.tsx";
 import { useNavigate } from "react-router-dom";
 import {
@@ -18,6 +18,8 @@ import {
 import { WelcomeMessage } from '../WelcomeMessage.tsx';
 
 export const Dashboard = () => {
+
+    const notify = useNotify();
 
     const { data: events, isPending: p1 } = useGetList(
         "events",
@@ -39,6 +41,14 @@ export const Dashboard = () => {
                 { page: 1, perPage: 1000 }
         }
     )
+
+      const { total: totalRooms, isPending: p4 } = useGetList(
+        "rooms",
+        {
+            pagination: { page: 1, perPage: 1 }
+        }
+    )
+
     const now = new Date()
     const totalEvents = events?.length || 0
     const totalSessions = allSessions?.length || 0
@@ -66,7 +76,7 @@ export const Dashboard = () => {
     const hasSessionData = sessionsByEventData.some(d => d.sessions > 0)
 
     const maxSessions = Math.max(...sessionsByEventData.map(d => d.sessions), 0)
-    const yAxisMax = Math.max(maxSessions + 1, 5)
+    const yAxisMax = Math.max(maxSessions + 1, 10)
 
     const sessionStatusData = [
         { name: 'Sessions en cours', value: liveSessions, color: '#7C3AED' },
@@ -84,7 +94,18 @@ export const Dashboard = () => {
     }
 
     const handleSessionClick = () => {
-        navigate("/sessions");
+        notify('Les sessions sont visibles dans la page Événements', { 
+            type: 'info',
+            autoHideDuration: 2000,
+            anchorOrigin: {
+                vertical: 'bottom',
+                horizontal: 'center'
+            }
+        });
+    }
+
+    const handleRoomClick = () => {
+        navigate("/rooms");
     }
 
     return (
@@ -108,11 +129,11 @@ export const Dashboard = () => {
                     <Grid size={{ xs: 12, sm: 6, md: 3 }} onClick={handleSpeakerClick} sx={{ cursor: 'pointer' }}>
                         <StatCard title="Intervenants" value={totalSpeakers} isPending={p2} />
                     </Grid>
-                    <Grid size={{ xs: 12, sm: 6, md: 3 }} onClick={handleSessionClick} sx={{ cursor: 'pointer' }}>
-                        <StatCard title="Sessions totales" value={totalSessions} isPending={p3} />
+                    <Grid size={{ xs: 12, sm: 6, md: 3 }} onClick={handleRoomClick} sx={{ cursor: 'pointer' }}>
+                        <StatCard title="Salles" value={totalRooms} isPending={p4} />
                     </Grid>
                     <Grid size={{ xs: 12, sm: 6, md: 3 }} onClick={handleSessionClick} sx={{ cursor: 'pointer' }}>
-                        <StatCard title="Sessions en cours" value={liveSessions} isPending={p3} />
+                        <StatCard title="Sessions totales" value={totalSessions} isPending={p3} />
                     </Grid>
                 </Grid>
 
@@ -136,7 +157,7 @@ export const Dashboard = () => {
                                         <YAxis
                                             allowDecimals={false}
                                             domain={[0, yAxisMax]}
-                                            tickCount={yAxisMax + 1}
+                                            tickCount={Math.min(yAxisMax + 1, 11)}
                                         />
                                         <Tooltip
                                             formatter={(value, name, props) => {
