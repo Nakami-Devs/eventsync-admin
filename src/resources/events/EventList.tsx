@@ -20,7 +20,7 @@ import { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import VideocamIcon from "@mui/icons-material/Videocam";
+import MicIcon from '@mui/icons-material/Mic';
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
@@ -70,6 +70,11 @@ const EventRowList = () => {
         {data?.map((event, index) => (
           <Box
             key={event.id}
+            onClick={(e) => {
+              e.stopPropagation();
+              redirect(`/events/${event.id}/show`)
+            }
+            }
             sx={{
               background: isDark ? "#1e2235" : "#ffffff",
               borderRadius: "16px",
@@ -133,30 +138,30 @@ const EventRowList = () => {
                     {event.place || "—"}
                   </Typography>
                 </Box>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+                  <MicIcon
+                    sx={{
+                      fontSize: "0.9rem",
+                      color: isDark ? "#8b8fa8" : "#6b7280",
+                    }}
+                  />
+                  <Typography
+                    variant="body2"
+                    sx={{ color: isDark ? "#8b8fa8" : "#6b7280" }}
+                  >
+                    {`${event.sessions.length} session${event.sessions.length > 1 ? 's' : ''}` || "—"}
+                  </Typography>
+                </Box>
               </Box>
             </Box>
 
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <Box
-                onClick={() =>
-                  redirect(`/sessions?filter=${JSON.stringify({ event_id: event.id })}`)
+                onClick={(e) => {
+                  e.stopPropagation();
+                  redirect(`/events/${event.id}/edit`)
                 }
-                sx={{
-                  display: "flex", alignItems: "center", gap: 0.5,
-                  px: 2, py: 0.8, borderRadius: "10px",
-                  border: `1.5px solid ${isDark ? "#3d3560" : "#e5e0f8"}`,
-                  cursor: "pointer",
-                  "&:hover": { background: isDark ? "#2a2550" : "#f3f0ff" },
-                }}
-              >
-                <VideocamIcon sx={{ fontSize: "1rem", color: "#7c3aed" }} />
-                <Typography variant="body2" fontWeight={600} sx={{ color: "#7c3aed" }}>
-                  Sessions
-                </Typography>
-              </Box>
-
-              <Box
-                onClick={() => redirect(`/events/${event.id}`)}
+                }
                 sx={{
                   display: "flex", alignItems: "center", gap: 0.5,
                   px: 2, py: 0.8, borderRadius: "10px",
@@ -173,7 +178,11 @@ const EventRowList = () => {
 
               <IconButton
                 size="small"
-                onClick={() => handleDeleteClick(event)}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  handleDeleteClick(event)
+                }
+                }
                 sx={{
                   color: "#ef4444",
                   border: `1.5px solid ${isDark ? "#3d2020" : "#fecaca"}`,
