@@ -11,7 +11,7 @@ const MainContent = styled('main')(({ theme }) => ({
   flexGrow: 1,
   padding: theme.spacing(3),
   overflow: 'auto',
-  backgroundColor: '#f8f9fa',
+  backgroundColor: theme.palette.background.default,
   marginTop: 0,
 }));
 
