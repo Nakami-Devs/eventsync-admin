@@ -7,7 +7,6 @@ import { SpeakerCreate } from './resources/speakers/SpeakerCreate.tsx'
 import { SpeakerEdit } from './resources/speakers/SpeakerEdit.tsx'
 import { SpeakerShow } from './resources/speakers/SpeakerShow.tsx'
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt'
-import { AdminLayout } from './components/layout/Layout.tsx';
 import { EventList } from './resources/events/EventList.tsx';
 import { EventEdit } from './resources/events/EventEdit.tsx';
 import { EventCreate } from './resources/events/EventCreate.tsx';
@@ -21,6 +20,7 @@ import { SessionCreate } from './resources/events/sessions/SessionCreate.tsx'
 import { SessionEdit } from './resources/events/sessions/SessionEdit.tsx'
 import { SessionList } from './resources/events/sessions/SessionList.tsx'
 import { EventShow } from './resources/events/EventShow.tsx'
+import { CustomLayout } from './components/layout/CustomLayout.tsx'
 
 
 
@@ -55,7 +55,7 @@ function App() {
       authProvider={authProvider}
       dataProvider={dataProvider}
       dashboard={Dashboard}
-      layout={AdminLayout}
+      layout={CustomLayout}
       theme={lightTheme}
       darkTheme={darkTheme}
       loginPage={CustomLoginPage}

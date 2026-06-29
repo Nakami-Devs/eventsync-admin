@@ -1,10 +1,10 @@
-import { AppBar as RAAppBar, TitlePortal } from 'react-admin';
+import { AppBar as RAAppBar } from 'react-admin';
+import { styled } from '@mui/material';
+
+const StyledAppBar = styled(RAAppBar)(({ theme }) => ({
+  display: 'none',
+}));
 
 export const AppBar = (props: any) => {
-
-    return(
-        <RAAppBar {...props}>
-            <TitlePortal />
-        </RAAppBar>
-    )
-}
+  return <StyledAppBar {...props} />;
+};
