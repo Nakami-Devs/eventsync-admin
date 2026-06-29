@@ -11,6 +11,9 @@ import {
     Tooltip,
     Legend,
     ResponsiveContainer,
+    PieChart,
+    Cell,
+    Pie,
 } from 'recharts';
 
 export const Dashboard = () => {
@@ -63,6 +66,11 @@ export const Dashboard = () => {
 
     const maxSessions = Math.max(...sessionsByEventData.map(d => d.sessions), 0)
     const yAxisMax = Math.max(maxSessions + 1, 5)
+
+     const sessionStatusData = [
+    { name: 'Sessions en cours', value: liveSessions, color: '#7C3AED' },
+    { name: 'Sessions terminées', value: pastSessions, color: '#A78BFA' },
+  ].filter(item => item.value > 0) 
 
     const navigate = useNavigate();
 
@@ -137,6 +145,41 @@ export const Dashboard = () => {
                                 </BarChart>
                             </ResponsiveContainer>
                         )}
+                    </Paper>
+                </Grid>
+
+                <Grid size={{ xs: 12, md: 4 }}>
+                    <Paper sx={{ p: 3, borderRadius: 2, height: '100%' }}>
+                        <Typography variant="h6" gutterBottom>
+                        Status des sessions
+                        </Typography>
+                        {sessionStatusData.length === 0 ? (
+                            <Box display="flex" justifyContent="center" alignItems="center" height={300}>
+                                <Typography sx={{ color: '#8b8fa8' }}>
+                                Aucune session pour le moment
+                                </Typography>
+                            </Box>
+                            ) : (
+                            <ResponsiveContainer width="100%" height={300}>
+                                <PieChart>
+                                    <Pie
+                                        data={sessionStatusData}
+                                        cx="50%"
+                                        cy="50%"
+                                        innerRadius={60}
+                                        outerRadius={80}
+                                        paddingAngle={5}
+                                        dataKey="value"
+                                    >
+                                        {sessionStatusData.map((entry, index) => (
+                                        <Cell key={`cell-${index}`} fill={entry.color} />
+                                        ))}
+                                    </Pie>
+                                    <Tooltip formatter={(value) => `${value} session${value > 1 ? 's' : ''}`} />
+                                    <Legend />
+                                </PieChart>
+                            </ResponsiveContainer>
+                            )}
                     </Paper>
                 </Grid>
             </Grid>
