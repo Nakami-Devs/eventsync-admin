@@ -3,30 +3,30 @@ import { Typography, Paper, Stack } from '@mui/material';
 
 export const WelcomeMessage = () => {
     return (
-        <Paper 
-            elevation={0} 
-            sx={{ 
-                p: 4, 
+        <Paper
+            elevation={0}
+            sx={{
+                p: 4,
                 borderRadius: 2,
                 maxWidth: '100%'
             }}
         >
-            <Stack 
-                direction="row" 
-                alignItems="center" 
+            <Stack
+                direction="row"
+                alignItems="center"
                 spacing={2}
                 sx={{ mb: 2 }}
             >
-                <ChatBubbleIcon 
-                    sx={{ 
+                <ChatBubbleIcon
+                    sx={{
                         color: 'primary.main',
                         fontSize: 40
-                    }} 
+                    }}
                 />
-                <Typography 
-                    variant="h5" 
+                <Typography
+                    variant="h5"
                     component="h1"
-                    sx={{ 
+                    sx={{
                         fontWeight: 600,
                         fontSize: '1.25rem'
                     }}
@@ -34,10 +34,10 @@ export const WelcomeMessage = () => {
                     Bienvenue dans EventSync Admin
                 </Typography>
             </Stack>
-            
-            <Typography 
+
+            <Typography
                 variant="body1"
-                sx={{ 
+                sx={{
                     color: 'text.secondary',
                     fontSize: '1rem',
                     lineHeight: 1.7
