@@ -15,6 +15,7 @@ import {
     Cell,
     Pie,
 } from 'recharts';
+import { WelcomeMessage } from '../WelcomeMessage.tsx';
 
 export const Dashboard = () => {
 
@@ -88,16 +89,19 @@ export const Dashboard = () => {
 
     return (
         <Container maxWidth="xl" sx={{ py: 4 }}>
-            <Stack spacing={1} mb={4}>
-                <Typography variant="h2" color="#7C3AED" fontWeight="bold">
-                    EventSync, vivez votre événement autrement
-                </Typography>
-                <Typography variant="body1">
-                    Naviguez dans le planning, identifiez les sessions en cours et interagissez
-                    avec les intervenants en temps réel.
-                </Typography>
-            </Stack>
-            <Grid container spacing={3} mb={4}>
+            <Stack spacing={4}>
+            <Box>
+                <Stack spacing={1}>
+                    <Typography variant="h2" color="#7C3AED" fontWeight="bold">
+                        EventSync, vivez votre événement autrement
+                    </Typography>
+                    <Typography variant="body1">
+                        Naviguez dans le planning, identifiez les sessions en cours et interagissez
+                        avec les intervenants en temps réel.
+                    </Typography>
+                </Stack>
+            </Box>
+            <Grid container spacing={3}>
                 <Grid size={{ xs: 12, sm: 6, md: 3 }} onClick={handleEventClick} sx={{ cursor: 'pointer' }}>
                     <StatCard title="Événements" value={totalEvents} isPending={p1} />
                 </Grid>
@@ -183,6 +187,8 @@ export const Dashboard = () => {
                     </Paper>
                 </Grid>
             </Grid>
+            <WelcomeMessage/>
+            </Stack>
         </Container>
     )
 }
