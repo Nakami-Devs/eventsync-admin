@@ -1,12 +1,11 @@
-import {Sidebar as RASidebar, Menu} from "react-admin";
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import EventIcon from '@mui/icons-material/Event';
 import PeopleIcon from '@mui/icons-material/People';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
-import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness';
+import Brightness6Icon from '@mui/icons-material/Brightness6';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { Box, Divider, styled, Typography } from "@mui/material"
+import { Box, Divider,  Typography } from "@mui/material"
 import {useTheme} from "../../hooks/useTheme.ts";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -158,7 +157,7 @@ export const Sidebar = () => {
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5, pb: 2 }}>
           <MenuItem
             primaryText="Thème"
-            leftIcon={<SettingsBrightnessIcon />}
+            leftIcon={<Brightness6Icon />}
             onClick={toggleTheme}
           />
           <MenuItem
