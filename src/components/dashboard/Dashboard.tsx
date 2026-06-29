@@ -42,7 +42,7 @@ export const Dashboard = () => {
         }
     )
 
-      const { total: totalRooms, isPending: p4 } = useGetList(
+    const { total: totalRooms, isPending: p4 } = useGetList(
         "rooms",
         {
             pagination: { page: 1, perPage: 1 }
@@ -67,9 +67,10 @@ export const Dashboard = () => {
         ).length || 0
 
         return {
-            name: event.title?.length > 15 ? event.title.substring(0, 15) + '...' : event.title || 'Sans titre',
+            id: event.id,
+            eventTitle: event.title || 'Sans titre',
             sessions: sessionCount,
-            fullTitle: event.title || 'Sans titre',
+            displayName: event.title?.length > 15 ? event.title.substring(0, 15) + '...' : event.title || 'Sans titre',
         }
     }) || []
 
@@ -83,6 +84,13 @@ export const Dashboard = () => {
         { name: 'Sessions terminées', value: pastSessions, color: '#A78BFA' },
     ].filter(item => item.value > 0)
 
+    const formatSessionCount = (value: any): string => {
+        if (typeof value === 'number') {
+            return `${value} session${value > 1 ? 's' : ''}`
+        }
+        return '0 session'
+    }
+
     const navigate = useNavigate();
 
     const handleEventClick = () => {
@@ -94,7 +102,7 @@ export const Dashboard = () => {
     }
 
     const handleSessionClick = () => {
-        notify('Les sessions sont visibles dans la page Événements', { 
+        notify('Les sessions sont visibles dans la page Événements', {
             type: 'info',
             autoHideDuration: 2000,
             anchorOrigin: {
@@ -153,16 +161,24 @@ export const Dashboard = () => {
                                 <ResponsiveContainer width="100%" height={300}>
                                     <BarChart data={sessionsByEventData}>
                                         <CartesianGrid strokeDasharray="3 3" />
-                                        <XAxis dataKey="name" />
+                                        <XAxis
+                                            dataKey="id"
+                                            tickFormatter={(id) => {
+                                                const item = sessionsByEventData.find(d => d.id === id);
+                                                return item?.displayName || id;
+                                            }}
+                                        />
+
                                         <YAxis
                                             allowDecimals={false}
                                             domain={[0, yAxisMax]}
                                             tickCount={Math.min(yAxisMax + 1, 11)}
                                         />
                                         <Tooltip
-                                            formatter={(value, name, props) => {
-                                                const item = props?.payload
-                                                return [`${value} session${value > 1 ? 's' : ''}`, item?.fullTitle || '']
+                                            formatter={formatSessionCount}
+                                            labelFormatter={(id) => {
+                                                const item = sessionsByEventData.find(d => d.id === id);
+                                                return item?.eventTitle || id;
                                             }}
                                         />
                                         <Legend />
