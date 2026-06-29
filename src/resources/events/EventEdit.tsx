@@ -19,6 +19,7 @@ import { SessionCard } from "./components/SessionCard";
 import AddIcon from '@mui/icons-material/Add'
 import VideocamIcon from '@mui/icons-material/Videocam'
 import { EventFormFields } from "./components/EventFormFields";
+import { useNavigate } from "react-router-dom";
 
 const SessionsSection = ({ eventId }: { eventId: string }) => {
   const [create] = useCreate();
@@ -26,6 +27,7 @@ const SessionsSection = ({ eventId }: { eventId: string }) => {
   const [deleteOne] = useDelete();
   const notify = useNotify();
   const refresh = useRefresh()
+  const navigate = useNavigate();
   const { data: rooms = [] } = useGetList(
     'rooms',
     {
@@ -46,40 +48,60 @@ const SessionsSection = ({ eventId }: { eventId: string }) => {
   const [deleteTarget, setDeleteTarget] = useState<any>(null)
 
   const handleCreate = (data: SessionFormData) => {
-      create(
-        'sessions',
-        { data: { ...data, id_event: eventId, start_time: new Date(data.start_time).toISOString(), end_time: new Date(data.end_time).toISOString() } },
-        {
-          onSuccess: () => { notify('Session créée', { type: 'success' }); setCreateOpen(false); refresh() },
-          onError: () => notify('Erreur création', { type: 'error' }),
-        }
-      )
-    } 
+    create(
+      'sessions',
+      { data: { ...data, id_event: eventId, start_time: new Date(data.start_time).toISOString(), end_time: new Date(data.end_time).toISOString() } },
+      {
+        onSuccess: () => { notify('Session créée', { type: 'success' }); setCreateOpen(false); refresh() },
+        onError: () => notify('Erreur création', { type: 'error' }),
+      }
+    )
+  }
 
 
-   const handleEdit = (data: SessionFormData) => {
-      update(
-        'sessions',
-        { id: editTarget.id, data: { ...data, start_time: new Date(data.start_time).toISOString(), end_time: new Date(data.end_time).toISOString() }, previousData: editTarget },
-        {
-          onSuccess: () => { notify('Session modifiée', { type: 'success' }); setEditTarget(null); refresh() },
-          onError: () => notify('Erreur modification', { type: 'error' }),
-        }
-      )
-    }
-  
-    const handleDelete = () => {
-      deleteOne(
-        'sessions',
-        { id: deleteTarget.id, previousData: deleteTarget },
-        {
-          onSuccess: () => { notify('Session supprimée', { type: 'success' }); setDeleteTarget(null); refresh() },
-          onError: () => notify('Erreur suppression', { type: 'error' }),
-        }
-      )
-    }
+  const handleEdit = (data: SessionFormData) => {
+    update(
+      'sessions',
+      { id: editTarget.id, data: { ...data, start_time: new Date(data.start_time).toISOString(), end_time: new Date(data.end_time).toISOString() }, previousData: editTarget },
+      {
+        onSuccess: () => { notify('Session modifiée', { type: 'success' }); setEditTarget(null); refresh() },
+        onError: () => notify('Erreur modification', { type: 'error' }),
+      }
+    )
+  }
 
-    return (
+  const handleDelete = () => {
+    deleteOne(
+      'sessions',
+      { id: deleteTarget.id, previousData: deleteTarget },
+      {
+        onSuccess: () => { notify('Session supprimée', { type: 'success' }); setDeleteTarget(null); refresh() },
+        onError: () => notify('Erreur suppression', { type: 'error' }),
+      }
+    )
+  }
+
+  const handleOpenCreate = () => {
+    setCreateOpen(true);
+    navigate(`/events/${eventId}/sessions/create`);
+  };
+
+  const handleCloseCreate = () => {
+    setCreateOpen(false);
+    navigate(`/events/${eventId}/show`);
+  };
+
+  const handleOpenEdit = (session: any) => {
+    setEditTarget(session);
+    navigate(`/events/${eventId}/sessions/${session.id}/edit`);
+  };
+
+  const handleCloseEdit = () => {
+    setEditTarget(null);
+    navigate(`/events/${eventId}/show`);
+  };
+
+  return (
     <>
       <Card sx={{ background: '#242233', color: 'white', borderRadius: 4 }}>
         <CardContent>
@@ -91,8 +113,15 @@ const SessionsSection = ({ eventId }: { eventId: string }) => {
                 <Chip label={sessions.length} size="small" sx={{ bgcolor: '#5B3FD6', color: 'white', fontWeight: 700 }} />
               )}
             </Typography>
-            <Button startIcon={<AddIcon />} variant="outlined" onClick={() => setCreateOpen(true)}
-              sx={{ borderRadius: '10px', borderColor: '#5B3FD6', color: '#a78bfa', '&:hover': { background: '#2a2550', borderColor: '#7c3aed' } }}>
+            <Button startIcon={<AddIcon />} variant="outlined" onClick={handleOpenCreate}
+              sx={{ 
+                borderRadius: '10px', 
+                borderColor: '#5B3FD6', 
+                color: '#a78bfa', 
+                textTransform: 'none',
+                '&:hover': { background: '#2a2550', 
+                borderColor: '#7c3aed' 
+                } }}>
               Ajouter
             </Button>
           </Box>
@@ -106,7 +135,7 @@ const SessionsSection = ({ eventId }: { eventId: string }) => {
           )}
 
           {!isLoading && sessions.length === 0 && (
-            <Typography sx={{ color: '#8b8fa8'}}>
+            <Typography sx={{ color: '#8b8fa8' }}>
               Aucune session pour cet événement.
             </Typography>
           )}
@@ -130,12 +159,12 @@ const SessionsSection = ({ eventId }: { eventId: string }) => {
         </CardContent>
       </Card>
 
-      <SessionDialog open={createOpen} mode="create" onClose={() => setCreateOpen(false)} onSubmit={handleCreate} />
+      <SessionDialog open={createOpen} mode="create" onClose={handleCloseCreate} onSubmit={handleCreate} />
 
       {editTarget && (
         <SessionDialog
           open={!!editTarget} mode="edit"
-          onClose={() => setEditTarget(null)}
+          onClose={handleCloseEdit}
           onSubmit={handleEdit}
           initial={{
             title: editTarget.title,
@@ -204,7 +233,16 @@ const EventEditForm = () => {
       </Box>
 
       <Button onClick={handleSubmit} variant="contained"
-        sx={{ background: '#7c3aed', borderRadius: '12px', px: 4, py: 1.5, fontSize: '1rem', fontWeight: 700, '&:hover': { background: '#6d28d9' } }}>
+        sx={{ 
+          background: '#7c3aed', 
+          borderRadius: '12px', 
+          px: 4, 
+          py: 1.5, 
+          fontSize: '1rem',
+          textTransform: 'none',  
+          fontWeight: 700, 
+          '&:hover': { background: '#6d28d9' } 
+          }}>
         Enregistrer les modifications
       </Button>
     </Box>

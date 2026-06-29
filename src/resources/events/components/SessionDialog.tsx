@@ -183,12 +183,16 @@ export const SessionDialog = ({ open, onClose, onSubmit, initial, mode, eventSta
       )}
 
       <DialogActions sx={{ px: 3, pb: 3, gap: 1 }}>
-        <Button onClick={onClose} sx={{ color: '#8b8fa8', borderRadius: '10px' }}>
+        <Button onClick={onClose} sx={{ color: '#8b8fa8', borderRadius: '10px', textTransform: 'none' }}>
           Annuler
         </Button>
         <Button
           onClick={handleSubmit} variant="contained" disabled={!isValid}
-          sx={{ background: '#7c3aed', borderRadius: '10px', '&:hover': { background: '#6d28d9' } }}
+          sx={{ 
+            background: '#7c3aed', 
+            borderRadius: '10px', 
+            textTransform: 'none',
+            '&:hover': { background: '#6d28d9' } }}
         >
           {mode === 'create' ? 'Créer' : 'Enregistrer'}
         </Button>
